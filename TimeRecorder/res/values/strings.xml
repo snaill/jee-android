@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button_option">配置</string>
+    <string name="button_ok">确定</string>
+    <string name="hello">Hello World, TimeRecorder!</string>
+    <string name="app_name">TimeRecorder</string>
+
+</resources>
