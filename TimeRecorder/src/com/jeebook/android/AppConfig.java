@@ -3,9 +3,6 @@ package com.jeebook.android;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
-
-import com.jeebook.android.timerecorder.TimeRecorder;
-
 import android.content.*;
 
 public class AppConfig {
