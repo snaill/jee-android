@@ -3,10 +3,10 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" android:baselineAligned="false">
-<TextView android:id="@+id/MesssageView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text='"正点下班：14:22:32"' android:layout_marginBottom="5px" android:layout_marginLeft="15px" android:layout_marginRight="15px" android:layout_marginTop="15px"></TextView>
-<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content">
-<Button android:id="@+id/Button01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/button_ok"></Button>
-<Button android:id="@+id/Button02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/button_option"></Button>
+<RelativeLayout android:id="@+id/RelativeLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/MessageView" android:padding="5px" android:text="14:22:32" android:textSize="24px"></TextView>
+<Button android:id="@+id/Button02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/button_option" android:paddingBottom="5px" android:paddingTop="5px" android:layout_alignParentRight="true" android:paddingLeft="15px" android:paddingRight="15px"></Button>
+</RelativeLayout>
 
-</LinearLayout>
+
 </LinearLayout>
