@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+  
+	<CheckBoxPreference 
+		android:title="@string/pref_title_status" 
+		android:summary="@string/pref_summary_status" 
+		android:persistent="false" android:key="@string/pref_key_status">
+	</CheckBoxPreference>
+	
+	<com.jeebook.android.TimePickerPreference
+		android:title="@string/pref_title_interval" 
+		android:summary="@string/pref_summary_interval" 
+		android:key="@string/pref_key_interval">
+	</com.jeebook.android.TimePickerPreference>
+
+</PreferenceScreen>
