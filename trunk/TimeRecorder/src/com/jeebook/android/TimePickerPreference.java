@@ -58,7 +58,6 @@ public class TimePickerPreference extends DialogPreference implements
 	protected View onCreateDialogView() {
  
 		TimePicker tp = new TimePicker(getContext());
-		tp.setOnTimeChangedListener(this);
 		tp.setIs24HourView(true);
 		
 		int h = getHour();
@@ -67,7 +66,8 @@ public class TimePickerPreference extends DialogPreference implements
 			tp.setCurrentHour(h);
 			tp.setCurrentMinute(m);
 		}
- 
+		
+		tp.setOnTimeChangedListener(this);
 		return tp;
 	}
  
@@ -80,8 +80,9 @@ public class TimePickerPreference extends DialogPreference implements
 	 */
 	@Override
 	public void onTimeChanged(TimePicker view, int hour, int minute) {
- 
-		persistString(hour + ":" + minute);
+		String strTime = String.format("%d:%02d", hour, minute);
+		persistString(strTime);
+		getOnPreferenceChangeListener().onPreferenceChange(this, strTime);
 	}
  
 	/*
@@ -112,8 +113,8 @@ public class TimePickerPreference extends DialogPreference implements
 	 * @return The hour value, will be 0 to 23 (inclusive)
 	 */
 	private int getHour() {
-//		String time = getPersistedString(this.defaultValue);
-		String time = this.defaultValue;
+		String time = getPersistedString(this.defaultValue);
+//		String time = this.defaultValue;
 		if (time == null || !time.matches(VALIDATION_EXPRESSION)) {
 			return -1;
 		}
@@ -127,8 +128,8 @@ public class TimePickerPreference extends DialogPreference implements
 	 * @return the minute value, will be 0 to 59 (inclusive)
 	 */
 	private int getMinute() {
-//		String time = getPersistedString(this.defaultValue);
-		String time = this.defaultValue;
+		String time = getPersistedString(this.defaultValue);
+//		String time = this.defaultValue;
 		if (time == null || !time.matches(VALIDATION_EXPRESSION)) {
 			return -1;
 		}
