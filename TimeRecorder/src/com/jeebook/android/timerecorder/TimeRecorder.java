@@ -7,6 +7,7 @@ import android.widget.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.content.Context;
 import android.content.Intent; 
 import android.content.SharedPreferences;
@@ -66,7 +67,7 @@ public class TimeRecorder extends Activity {
         // 获取配置
         String strInterval = getString(R.string.pref_key_interval);
         String strAlarmTime = getString(R.string.pref_key_alarmtime);
-        SharedPreferences preferences = getSharedPreferences(getString(R.string.config_name), 0);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if ( !preferences.contains(strInterval))
         {
         	ShowOption();
@@ -99,7 +100,7 @@ public class TimeRecorder extends Activity {
         // 倒计时
         java.util.Random r=new java.util.Random();
         int rnd = ( r.nextInt() >>> 1 ) % 100;
-        _timer.scheduleAtFixedRate(task, rnd, rnd);
+        _timer.scheduleAtFixedRate(task, 0, rnd);
     }
     
     public boolean onTouchEvent (MotionEvent event)
