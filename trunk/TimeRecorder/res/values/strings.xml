@@ -12,8 +12,6 @@
  
     <string name="button_option">配置</string>
     <string name="button_ok">确定</string>
-    
-	<string name="config_name">config.dat</string>
 
 	<string name="text_finish">下班啦！！！</string>
 </resources>
