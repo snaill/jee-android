@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="pref_key_alarmtime">alarmtime</string>
+    <string name="pref_key_interval">interval</string>
+    <string name="pref_summary_status">点击放弃当前设置的提醒</string>
+    <string name="pref_title_status">放弃提醒</string>
+        <string name="pref_key_status">status</string>
     <string name="button_option">配置</string>
     <string name="button_ok">确定</string>
     
@@ -7,8 +12,12 @@
 
 <string name="config_name">config.dat</string>
 <string name="op_interval_hour">hour</string>
+<string name="op_interval_minute">minute</string>
 
 <string name="text_interval">请设置工作时间</string>
-<string name="op_interval_minute">minute</string>
+<string name="pref_title_interval">工作时间</string>
+<string name="pref_summary_interval">请设置上下班的间隔时间</string>
+
+
 <string name="text_finish">下班啦！！！</string>
 </resources>
