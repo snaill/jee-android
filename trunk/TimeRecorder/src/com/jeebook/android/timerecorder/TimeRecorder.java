@@ -122,8 +122,8 @@ public class TimeRecorder extends Activity {
         Intent intent = new Intent(context, AlarmReceiver.class);  
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);  
         AlarmManager am = (AlarmManager)context.getSystemService(ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+5000, pendingIntent);
-//        am.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent); 	
+//        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+5000, pendingIntent);
+        am.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent); 	
     }
     
     public static void CancelAlarm(Context context)
