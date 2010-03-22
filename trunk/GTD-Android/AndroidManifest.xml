@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2009 Android Shuffle Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jeebook.android.gtd"
+	android:versionCode="1"
+    android:versionName="1.0"    
+    >
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <uses-sdk android:minSdkVersion="6" android:targetSdkVersion="7" />
+    
+    <supports-screens
+          android:largeScreens="true"
+          android:normalScreens="true"
+          android:smallScreens="false"
+          android:anyDensity="true" />
+    
+    <application 
+    	android:theme="@style/ShuffleTheme"
+    	android:icon="@drawable/app_icon_3d" 
+        android:label="@string/app_name">
+    
+        <provider android:name=".provider.ShuffleProvider"
+            android:authorities="com.jeebook.android.gtd.provider.Shuffle" />
+    
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".activity.editor.TaskEditorActivity" />
+        
+        <activity android:name=".activity.BootstrapActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    
+        <activity android:name=".activity.WelcomeActivity" android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light"
+	        >
+        </activity>
+            
+        <activity android:name=".activity.TopLevelActivity" android:label="@string/app_name">
+        </activity>
+
+        <activity android:name=".activity.TabbedDueActionsActivity">
+        </activity>
+
+        <activity android:name=".activity.InboxActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.task" />
+            </intent-filter>            
+        </activity>
+
+        <activity android:name=".activity.TopTasksActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.task" />
+            </intent-filter>            
+        </activity>
+
+        <activity android:name=".activity.ProjectTasksActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.task" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.ContextTasksActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.task" />
+            </intent-filter>            
+        </activity>
+
+        <activity android:name=".activity.ExpandableProjectsActivity" android:label="@string/title_project">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.project" />
+            </intent-filter>            
+        </activity>
+        
+        
+        <activity android:name=".activity.ProjectsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.project" />
+            </intent-filter>            
+        </activity>
+        
+        <activity android:name=".activity.ExpandableContextsActivity" android:label="@string/title_context">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <type android:name="vnd.android.cursor.dir/vnd.dodgybits.context" />
+            </intent-filter>            
+        </activity>
+        
+        <activity android:name=".activity.ContextsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+                <type android:name="vnd.android.cursor.dir/vnd.dodgybits.context" />
+            </intent-filter>            
+        </activity>
+        
+        <activity android:name=".activity.editor.TaskEditorActivity" 
+        	android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light"
+        	>
+            <!-- This filter says that we can edit the data of a single task -->
+            <intent-filter android:label="@string/title_edit_task">
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="com.jeebook.android.gtd.action.EDIT_TASK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.dodgybits.task" />
+            </intent-filter>
+
+            <!-- This filter says that we can create a new task inside
+                 of a directory of tasks. -->
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.task" />
+            </intent-filter>
+            
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            
+        </activity>
+		
+        <activity android:name=".activity.editor.ProjectEditorActivity" 
+        	android:label="@string/title_new_project"
+            android:theme="@android:style/Theme.Light"
+        	>
+            <!-- This filter says that we can view or edit the data of
+                 a single project -->
+            <intent-filter android:label="@string/title_edit_project">
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="com.jeebook.android.gtd.action.EDIT_PROJECT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.dodgybits.project" />
+            </intent-filter>
+
+            <!-- This filter says that we can create a new project inside
+                 of a directory of projects. -->
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.project" />
+            </intent-filter>
+        </activity>        
+
+        <activity android:name=".activity.editor.ContextEditorActivity" 
+        	android:label="@string/title_new_context"
+            android:theme="@android:style/Theme.Light"
+        	>
+            <!-- This filter says that we can view or edit the data of
+                 a single context -->
+            <intent-filter android:label="@string/title_edit_context">
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="com.jeebook.android.gtd.action.EDIT_CONTEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.dodgybits.context" />
+            </intent-filter>
+
+            <!-- This filter says that we can create a new context inside
+                 of a directory of contexts. -->
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.context" />
+            </intent-filter>
+        </activity>        
+
+        
+        <activity android:name=".activity.preferences.PreferencesActivity" 
+        	android:label="@string/title_preferences">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.preferences" />
+            </intent-filter>            
+        </activity>
+
+        <activity android:name=".activity.preferences.PreferencesAppearanceActivity" 
+        	android:label="@string/title_preferences_appearance">
+        </activity>
+
+        <activity android:name=".activity.preferences.PreferencesCreateBackupActivity" 
+        	android:label="@string/title_preferences_create_backup"
+        	android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>            
+        </activity>
+
+        <activity android:name=".activity.preferences.PreferencesRestoreBackupActivity" 
+        	android:label="@string/title_preferences_restore_backup"
+        	android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>            
+        </activity>
+
+        <activity android:name=".activity.preferences.PreferencesDeleteCompletedActivity" 
+        	android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>            
+        </activity>
+
+        <activity android:name=".activity.preferences.PreferencesDeleteAllActivity" 
+        	android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>            
+        </activity>
+
+        <activity android:name=".activity.HelpActivity" 
+        	android:label="@string/title_help"
+            android:theme="@android:style/Theme.Light"
+        >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.help" />
+            </intent-filter>            
+        </activity>
+
+        <activity android:name=".activity.editor.IconPickerActivity" 
+        	android:label="@string/title_icon_picker"
+        	android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.icons" />
+            </intent-filter>            
+        </activity>
+        
+        <activity android:name=".activity.editor.ColourPickerActivity" 
+        	android:label="@string/title_colour_picker"
+        	android:theme="@android:style/Theme.Dialog">
+        	<!--  android:theme="@android:style/Theme.Dialog" -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.dodgybits.colours" />
+            </intent-filter>            
+        </activity>
+                
+        <activity android:name=".activity.LauncherShortcutActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".activity.SynchronizeActivity"/>
+        <activity android:name=".activity.preferences.SynchronizationSettingsActivity"/>
+
+        <activity-alias android:name=".activity.LauncherShortcutActivity"
+            android:targetActivity=".activity.LauncherShortcutActivity"
+            android:label="@string/app_name">
+
+            <!--  This intent-filter allows your shortcuts to be created in the launcher. -->
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity-alias>
+
+        <service android:name=".service.SynchronizationService"/>
+    </application>
+    
+</manifest> 
