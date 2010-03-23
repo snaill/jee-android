@@ -13,7 +13,7 @@
       
   <filter>
     <filter-name>PersistenceFilter</filter-name>
-    <filter-class>org.dodgybits.shuffle.web.server.persistence.PersistenceFilter</filter-class>
+    <filter-class>com.jeebook.appengine.gtd.server.persistence.PersistenceFilter</filter-class>
   </filter>
 
   <filter-mapping>
@@ -23,17 +23,17 @@
     
   <servlet>
     <servlet-name>loginService</servlet-name>
-    <servlet-class>org.dodgybits.shuffle.web.server.service.LoginServiceImpl</servlet-class>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.LoginServiceImpl</servlet-class>
   </servlet>
     
   <servlet>
     <servlet-name>taskServiceImpl</servlet-name>
-    <servlet-class>org.dodgybits.shuffle.web.server.service.TaskServiceImpl</servlet-class>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.TaskServiceImpl</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>uploadServlet</servlet-name>
-    <servlet-class>org.dodgybits.shuffle.web.server.service.RestoreServlet</servlet-class>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.RestoreServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
