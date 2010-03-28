@@ -103,6 +103,13 @@ public class TimeRecorder extends Activity {
         _timer.scheduleAtFixedRate(task, 0, rnd);
     }
     
+    public void onPause() {
+    	super.onPause();
+    	
+    	_timer.cancel();
+    	finish();
+    }
+    
     public boolean onTouchEvent (MotionEvent event)
     {
     	finish();

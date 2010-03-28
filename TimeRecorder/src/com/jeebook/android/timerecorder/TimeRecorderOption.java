@@ -68,12 +68,14 @@ public class TimeRecorderOption extends PreferenceActivity {
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				// TODO Auto-generated method stub
 				preference.setSummary(newValue.toString());
-				
-//				SharedPreferences.Editor edit = preference.getEditor();
-//				edit.putString(getString(R.string.pref_key_interval), newValue.toString());
-//				edit.commit();
 				return true;
 			}
 		});
+    }
+    
+    public void onPause() {
+    	super.onPause();
+    	
+    	finish();
     }
 }
