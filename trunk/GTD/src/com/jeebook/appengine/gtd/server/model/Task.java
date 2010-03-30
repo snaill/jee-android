@@ -52,6 +52,8 @@ public class Task implements Serializable {
     @Persistent
     private Date mDueDate;
 
+    @Persistent
+    private Date mFinishDate;
     
     public final Key getKey() {
         return mKey;
@@ -80,6 +82,10 @@ public class Task implements Serializable {
 	public final Date getDueDate() {
 		return mDueDate;
 	}
+
+	public final Date getFinishDate() {
+		return mFinishDate;
+	}
 	
 	public final TaskValue toTaskValue() {
 	    KeyValue<TaskValue> keyValue = toKeyValue(mKey); 
@@ -92,7 +98,8 @@ public class Task implements Serializable {
 	        .setDetails(mDetails == null ? null : mDetails.getValue())
 	        .setProjectId(projectKey)
 	        .setContextIds(contextKeys)
-	        .setDueDate(mDueDate);
+	        .setDueDate(mDueDate)
+	        .setFinishDate(mFinishDate);
         return builder.build();
 	}
 	
@@ -105,6 +112,7 @@ public class Task implements Serializable {
         task.mProjectKey = toKey(value.getProjectId());
         task.mContextKeys = toKeys(value.getContextIds());
         task.mDueDate = value.getDueDate();
+        task.mFinishDate = value.getFinishDate();
         return task;
     }
 	

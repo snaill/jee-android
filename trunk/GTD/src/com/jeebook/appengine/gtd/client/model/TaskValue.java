@@ -12,6 +12,7 @@ public class TaskValue implements Serializable {
 	private KeyValue<ProjectValue> mProjectId;
 	private ArrayList<KeyValue<ContextValue>> mContextIds;
 	private Date mDueDate;
+	private Date mFinishDate;
 	
 	@SuppressWarnings("unused")
 	private TaskValue() {
@@ -22,13 +23,15 @@ public class TaskValue implements Serializable {
 			KeyValue<TaskValue> id, 
 			String title, String details,
 			KeyValue<ProjectValue> projectId, ArrayList<KeyValue<ContextValue>> contextIds, 
-			Date dueDate) {
+			Date dueDate,
+			Date finishDate) {
 		mKeyValue = id;
 		mTitle = title;
 		mDetails = details;
 		mProjectId = projectId;
 		mContextIds = contextIds;
 		mDueDate = dueDate;
+		mFinishDate = finishDate;
 	}
 
 	public final KeyValue<TaskValue> getId() {
@@ -55,13 +58,18 @@ public class TaskValue implements Serializable {
 		return mDueDate;
 	}
 	
-    public static final class Builder {
+	public final Date getFinishDate() {
+		return mFinishDate;
+	}
+	
+	public static final class Builder {
         private KeyValue<TaskValue> mKeyValue;
         private String mTitle;
         private String mDetails;
         private KeyValue<ProjectValue> mProjectId;
         private ArrayList<KeyValue<ContextValue>> mContextIds;
         private Date mDueDate;
+        private Date mFinishDate;
         
         public Builder setId(KeyValue<TaskValue> id) {
             mKeyValue = id;
@@ -98,11 +106,15 @@ public class TaskValue implements Serializable {
             return this;
         }
 
+        public final Builder setFinishDate(Date finishDate) {
+            mFinishDate = finishDate;
+            return this;
+        }
+        
         public TaskValue build() {
             return new TaskValue(mKeyValue, mTitle, mDetails, 
-                    mProjectId, mContextIds, mDueDate);
+                    mProjectId, mContextIds, mDueDate, mFinishDate);
         }
         
     }
-	
 }

@@ -99,7 +99,7 @@ public class TaskServiceImpl extends RemoteServiceServlet implements
         Date dueDate = new Date(System.currentTimeMillis() + MILLIS_IN_DAY
                 * dayOffset);
         return new TaskValue(null, "XX" + title, description, null, null,
-                dueDate);
+                dueDate, null);
     }
 
     private static final String[] titles = new String[] {
