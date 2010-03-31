@@ -28,7 +28,7 @@ import com.jeebook.appengine.gtd.client.model.TaskValue.Builder;
 
 @SuppressWarnings("serial")
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Task implements Serializable {
+public class Task extends Component<Task, TaskValue> {
 
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -87,7 +87,8 @@ public class Task implements Serializable {
 		return mFinishDate;
 	}
 	
-	public final TaskValue toTaskValue() {
+	protected TaskValue toJson()
+	{
 	    KeyValue<TaskValue> keyValue = toKeyValue(mKey); 
         KeyValue<ProjectValue> projectKey = toKeyValue(mProjectKey);
         ArrayList<KeyValue<ContextValue>> contextKeys = toKeyValues(mContextKeys);
@@ -103,7 +104,8 @@ public class Task implements Serializable {
         return builder.build();
 	}
 	
-    public static final Task fromTaskValue(User user, TaskValue value) {
+	protected Task fromJson(User user, TaskValue value)
+	{
         Task task = new Task();
         task.mKey = toKey(value.getId());
         task.user = user;
@@ -114,6 +116,5 @@ public class Task implements Serializable {
         task.mDueDate = value.getDueDate();
         task.mFinishDate = value.getFinishDate();
         return task;
-    }
-	
+	}
 }
