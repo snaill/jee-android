@@ -57,13 +57,13 @@ public class TaskServiceImpl extends RemoteServiceServlet implements
         checkLoggedIn();
         
         PersistenceManager pm = JdoUtils.getPm();
-        Task task = Task.fromTaskValue(getUser(), taskValue);
+        Task task = Task.fromJson(getUser(), taskValue);
         try {
             task = pm.makePersistent(task);
         } finally {
             JdoUtils.closePm();
         }
-        return task.toTaskValue();
+        return task.toJson();
     }
 
     private void setFilter(Query query, TaskFilter filter) {
