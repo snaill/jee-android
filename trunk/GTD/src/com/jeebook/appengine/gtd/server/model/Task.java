@@ -5,7 +5,6 @@ import static com.jeebook.appengine.gtd.server.persistence.JdoUtils.toKeyValue;
 import static com.jeebook.appengine.gtd.server.persistence.JdoUtils.toKeyValues;
 import static com.jeebook.appengine.gtd.server.persistence.JdoUtils.toKeys;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -87,7 +86,7 @@ public class Task extends Component<Task, TaskValue> {
 		return mFinishDate;
 	}
 	
-	protected TaskValue toJson()
+	public TaskValue toJson()
 	{
 	    KeyValue<TaskValue> keyValue = toKeyValue(mKey); 
         KeyValue<ProjectValue> projectKey = toKeyValue(mProjectKey);
@@ -104,7 +103,7 @@ public class Task extends Component<Task, TaskValue> {
         return builder.build();
 	}
 	
-	protected Task fromJson(User user, TaskValue value)
+	public Task fromJson(User user, TaskValue value)
 	{
         Task task = new Task();
         task.mKey = toKey(value.getId());
