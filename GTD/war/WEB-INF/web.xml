@@ -4,7 +4,50 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
+
+	<!-- Home URL -->  
+  <welcome-file-list>
+    <welcome-file>Shuffle.html</welcome-file>
+  </welcome-file-list>
+
+	<!-- Project Servlet -->  
+  <servlet>
+    <servlet-name>ProjectServlet</servlet-name>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.ProjectServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ProjectServlet</servlet-name>
+    <url-pattern>/api/project/*</url-pattern>
+  </servlet-mapping> 
+
+	<!-- Context Servlet -->  
+  <servlet-mapping>
+    <servlet-name>uploadServlet</servlet-name>
+    <url-pattern>/api/contexts/*</url-pattern>
+  </servlet-mapping> 
+
+	<!-- Action Servlet -->
+  <servlet>
+    <servlet-name>ActionServlet</servlet-name>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.Action</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ActionServlet</servlet-name>
+    <url-pattern>/api/action/*</url-pattern>
+  </servlet-mapping> 
     
+  <servlet>
+    <servlet-name>ActionsServlet</servlet-name>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.Actions</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ActionsServlet</servlet-name>
+    <url-pattern>/api/*_actions</url-pattern>
+  </servlet-mapping> 
+  
   <context-param>
     <!-- max size of the upload request -->
     <param-name>maxSize</param-name>
@@ -50,41 +93,5 @@
     <servlet-name>uploadServlet</servlet-name>
     <url-pattern>/shuffle/restore</url-pattern>
   </servlet-mapping>  
-
-	<!-- Action Servlet -->
-  <servlet>
-    <servlet-name>ActionServlet</servlet-name>
-    <servlet-class>com.jeebook.appengine.gtd.server.service.Action</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>ActionServlet</servlet-name>
-    <url-pattern>/api/action/*</url-pattern>
-  </servlet-mapping> 
-    
-  <servlet>
-    <servlet-name>ActionsServlet</servlet-name>
-    <servlet-class>com.jeebook.appengine.gtd.server.service.Actions</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>ActionsServlet</servlet-name>
-    <url-pattern>/api/*_actions</url-pattern>
-  </servlet-mapping> 
-  
-	<!-- Project Servlet -->  
-  <servlet-mapping>
-    <servlet-name>uploadServlet</servlet-name>
-    <url-pattern>/api/projects/*</url-pattern>
-  </servlet-mapping> 
-  
-  <servlet-mapping>
-    <servlet-name>uploadServlet</servlet-name>
-    <url-pattern>/api/contexts/*</url-pattern>
-  </servlet-mapping> 
-
-  <welcome-file-list>
-    <welcome-file>Shuffle.html</welcome-file>
-  </welcome-file-list>
 
 </web-app>

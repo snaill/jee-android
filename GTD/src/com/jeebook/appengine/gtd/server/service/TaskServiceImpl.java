@@ -44,9 +44,9 @@ public class TaskServiceImpl extends RemoteServiceServlet implements
             setFilter(query, filter);
             setOrdering(query, order);
             List<Task> tasks = (List<Task>) query.execute(getUser());
-            for (Task task : tasks) {
-                taskValues.add(task.toTaskValue());
-            }
+     //       for (Task task : tasks) {
+     //           taskValues.add(task.toTaskValue());
+    //        }
         } finally {
             JdoUtils.closePm();
         }
@@ -57,7 +57,7 @@ public class TaskServiceImpl extends RemoteServiceServlet implements
         checkLoggedIn();
         
         PersistenceManager pm = JdoUtils.getPm();
-        Task task = Task.fromJson(getUser(), taskValue);
+        Task task = null;//Task.fromJson(getUser(), taskValue);
         try {
             task = pm.makePersistent(task);
         } finally {
