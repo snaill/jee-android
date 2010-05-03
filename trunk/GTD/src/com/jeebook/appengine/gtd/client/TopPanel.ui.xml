@@ -37,6 +37,10 @@
       <span class="{style.emailDiv}" ui:field="emailSpan">
       </span>
       |
+      <g:Anchor href='javascript:;' ui:field='newActionLink'>New Action</g:Anchor>
+      |
+      <g:Anchor href='javascript:;' ui:field='reportLink'>Report</g:Anchor>      
+      |
       <g:Anchor href='javascript:;' ui:field='settingsLink'>Settings</g:Anchor>
       |
       <g:Anchor href='javascript:;' ui:field='loginLink'>Sign In</g:Anchor>

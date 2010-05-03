@@ -40,6 +40,8 @@ public class TopPanel extends Composite {
   @UiField SpanElement emailSpan;
   @UiField Anchor loginLink;
   @UiField Anchor settingsLink;
+  @UiField Anchor newActionLink;
+  @UiField Anchor reportLink;
   
   @Inject
   public TopPanel(LoginServiceAsync loginService, final LoginInfo loginInfo) {
