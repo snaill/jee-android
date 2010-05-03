@@ -10,21 +10,18 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class InboxPanel extends Composite {
+public class ActionWidget extends Composite {
 
-	private static InboxPanelUiBinder uiBinder = GWT
-			.create(InboxPanelUiBinder.class);
+	private static ActionWidgetUiBinder uiBinder = GWT
+			.create(ActionWidgetUiBinder.class);
 
-	interface InboxPanelUiBinder extends UiBinder<Widget, InboxPanel> {
+	interface ActionWidgetUiBinder extends UiBinder<Widget, ActionWidget> {
 	}
 
-	@UiField Button button;
+	@UiField
+	Button button;
 
-	public InboxPanel() {
-		initWidget(uiBinder.createAndBindUi(this));
-	}
-	
-	public InboxPanel(String firstName) {
+	public ActionWidget(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
 		button.setText(firstName);
 	}
