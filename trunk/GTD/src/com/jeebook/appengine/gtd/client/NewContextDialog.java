@@ -5,8 +5,10 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 
@@ -18,6 +20,8 @@ public class NewContextDialog extends DialogBox {
 	interface NewContextDialogUiBinder extends UiBinder<Widget, NewContextDialog> {
 	}
 
+	@UiField TextBox nameTextBox;
+	
 	public NewContextDialog() {
 	    // Use this opportunity to set the dialog's caption.
 	    setText("About the Mail Sample");
@@ -44,9 +48,27 @@ public class NewContextDialog extends DialogBox {
 	    }
 	  }
 
+	  @UiHandler("saveButton")
+	  void onSaveClicked(ClickEvent event) {
+//		  ContextData	cd = new ContextData();
+//		  cd.setName(nameTextBox.getText());
+//		  ContextData.New("/api/", cd);
+		  
+		  hide();
+	  }
+	  
+	  @UiHandler("saveAndNewButton")
+	  void onSaveAndNewClicked(ClickEvent event) {
+//		  ContextData	cd = new ContextData();
+//		  cd.setName(nameTextBox.getText());
+//		  ContextData.New("/api/", cd);
+		  
+		  nameTextBox.setText("");
+		  hide();
+	  }
+	  
 	  @UiHandler("closeButton")
-	  void onSignOutClicked(ClickEvent event) {
+	  void onCloseClicked(ClickEvent event) {
 	    hide();
 	  }
-
 }
