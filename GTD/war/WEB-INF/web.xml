@@ -22,9 +22,14 @@
   </servlet-mapping> 
 
 	<!-- Context Servlet -->  
+  <servlet>
+    <servlet-name>ContextServlet</servlet-name>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.ContextServlet</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
-    <servlet-name>uploadServlet</servlet-name>
-    <url-pattern>/api/contexts/*</url-pattern>
+    <servlet-name>ContextServlet</servlet-name>
+    <url-pattern>/api/context/*</url-pattern>
   </servlet-mapping> 
 
 	<!-- Action Servlet -->
