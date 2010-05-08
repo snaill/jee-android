@@ -39,13 +39,7 @@
       |
       <g:Anchor href='javascript:;' ui:field='newActionLink'>New Action</g:Anchor>
       |
-      <g:Anchor href='javascript:;' ui:field='newProjectLink'>New Project</g:Anchor>
-      |
-      <g:Anchor href='javascript:;' ui:field='newContextLink'>New Context</g:Anchor>
-      |
       <g:Anchor href='javascript:;' ui:field='reportLink'>Report</g:Anchor>      
-      |
-      <g:Anchor href='javascript:;' ui:field='settingsLink'>Settings</g:Anchor>
       |
       <g:Anchor href='javascript:;' ui:field='loginLink'>Sign In</g:Anchor>
     </div>

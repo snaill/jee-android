@@ -51,10 +51,7 @@ public class TopPanel extends Composite {
   
   @UiField SpanElement emailSpan;
   @UiField Anchor loginLink;
-  @UiField Anchor settingsLink;
   @UiField Anchor newActionLink;
-  @UiField Anchor newProjectLink;
-  @UiField Anchor newContextLink;
   @UiField Anchor reportLink;
   
   @Inject
@@ -76,15 +73,5 @@ public class TopPanel extends Composite {
   @UiHandler("newActionLink")
 	void onNewActionClick(ClickEvent e) {
 			new NewActionDialog().show();
-	}
-  
-  @UiHandler("newProjectLink")
-	void onNewProjectClick(ClickEvent e) {
-			new NewProjectDialog().show();
-	}
-  
-  @UiHandler("newContextLink")
-	void onNewContextClick(ClickEvent e) {
-			new NewContextDialog().show();
 	}
 }
