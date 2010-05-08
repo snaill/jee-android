@@ -3,13 +3,14 @@ package com.jeebook.appengine.gtd.server.service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.*;
 
 import com.google.appengine.api.users.User;
 import com.jeebook.appengine.gtd.server.model.Context;
@@ -17,10 +18,14 @@ import com.jeebook.appengine.gtd.server.persistence.JdoUtils;
 
 public class ContextServlet extends BaseServlet {
 	
-	protected JSONObject New(User user, JSONObject jo) {         
+	 @Override
+	protected String New(User user, String json) {    
+		
+		JSONObject jo;
 		Context context = new Context();
 		context.setUser(user);
 		try {
+			jo = new JSONObject(json);
 			context.setName(jo.get("name").toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -35,48 +40,35 @@ public class ContextServlet extends BaseServlet {
 	        JdoUtils.closePm();
 	    }
 	    
-	    return new JSONObject(context);
+	    jo = new JSONObject(context);
+	    return jo.toString();
   }
-	
-	protected  void	doGet(HttpServletRequest req, HttpServletResponse resp) 
-	{
-/*		if ( false == checkUser(resp) )
-			return;
-		
-		String id = req.getPathInfo();
-		if ( id == null )
+	 @Override
+	@SuppressWarnings("unchecked")
+	protected String Get(User user, String id) { 
+	 	
+		JSONArray	ja = null;
+		if ( id != "/" )
 		{
 	        PersistenceManager pm = JdoUtils.getPm();
-	        Query query = pm.newQuery(Project.class);
-	        List<Project> projs = (List<Context>)query.execute();
-	        Project proj = pm.getObjectById(Project.class, id);
-			JSONArray	ja = new JSONArray(projs);
-	        PrintWriter out;
-			try {
-				out = resp.getWriter();
-		        out.write(ja.toString());
-		    } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+	        Query query = pm.newQuery(Context.class);
+	        List<Context> projs = (List<Context>)query.execute();
+			ja = new JSONArray(projs);
 		}
 		else
 		{
 	        PersistenceManager pm = JdoUtils.getPm();
-	        Project proj = pm.getObjectById(Project.class, id);
-	        JSONObject jo = new JSONObject(proj);
-	        PrintWriter out;
+	        Context proj = pm.getObjectById(Context.class, id);
 			try {
-				out = resp.getWriter();
-		        out.write(jo.toString());
-		    } catch (IOException e) {
+				ja = new JSONArray(new JSONObject(proj));
+			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-*/	}
-
+		return ja.toString(); 
+	}
+	
 	protected  void	doDelete(HttpServletRequest req, HttpServletResponse resp) 
 	{
 		String id = req.getPathInfo();

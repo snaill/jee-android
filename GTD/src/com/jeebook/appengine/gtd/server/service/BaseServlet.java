@@ -15,13 +15,15 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.core.client.GWT;
 
+@SuppressWarnings("serial")
 public class BaseServlet extends HttpServlet {
 
-	protected JSONObject Get(User user, String pathInfo) { return null; }
-	protected JSONObject New(User user, JSONObject jo) { return null; }
-	protected JSONObject Delete(User user, String pathInfo) { return null; }
-	protected JSONObject Modify(User user, JSONObject jo) {	return null; }
+	protected String Get(User user, String pathInfo) { return null; }
+	protected String New(User user, String jo) { return null; }
+	protected String Delete(User user, String pathInfo) { return null; }
+	protected String Modify(User user, String jo) {	return null; }
 	
+	 @Override
 	protected  void	doGet(HttpServletRequest req, HttpServletResponse resp) 
 	{
 		//
@@ -40,19 +42,20 @@ public class BaseServlet extends HttpServlet {
     	
 		//
 		String pi = req.getPathInfo();
-		JSONObject jo = Get(user, pi);
+		String jo = Get(user, pi);
 		
 		//
-		if ( jo == null )
+		if ( jo == null || jo.isEmpty() )
 		{
 			resp.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
 			return;
 		}
 		
 		//
-		WriteJson(jo, resp);
+		Write(jo, resp);
 	}
 	
+	 @Override
 	protected  void	doPost(HttpServletRequest req, HttpServletResponse resp) 
 	{
 		//
@@ -69,12 +72,12 @@ public class BaseServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		WriteJson(jo, resp);
+    		Write(jo.toString(), resp);
     		return;
     	}
 		
 		//
-		JSONObject	jo = ReadJson(req);
+		String	jo = Read(req);
         jo = New(user, jo);
 		
         //
@@ -85,9 +88,10 @@ public class BaseServlet extends HttpServlet {
 		}
 		
 		//
-		WriteJson(jo, resp);
+		Write(jo, resp);
 	}
 	
+	 @Override
 	protected  void	doDelete(HttpServletRequest req, HttpServletResponse resp) 
 	{
 		//
@@ -96,7 +100,7 @@ public class BaseServlet extends HttpServlet {
 		
 		//
 		String pi = req.getPathInfo();
-		JSONObject jo = Delete(getUser(), pi);
+		String jo = Delete(getUser(), pi);
 		
 		//
 		if ( jo == null )
@@ -106,9 +110,10 @@ public class BaseServlet extends HttpServlet {
 		}
 		
 		//
-		WriteJson(jo, resp);
+		Write(jo, resp);
 	}
-		
+	
+	 @Override
 	protected  void	doPut(HttpServletRequest req, HttpServletResponse resp) 
 	{
 		//
@@ -116,7 +121,7 @@ public class BaseServlet extends HttpServlet {
 			return;
 		
 		//
-		JSONObject	jo = ReadJson(req);
+		String	jo = Read(req);
         jo = Modify(getUser(), jo);
 		
         //
@@ -127,11 +132,11 @@ public class BaseServlet extends HttpServlet {
 		}
 		
 		//
-		WriteJson(jo, resp);
+		Write(jo, resp);
 	}
 
 	
-	protected JSONObject ReadJson(HttpServletRequest req)
+	protected String Read(HttpServletRequest req)
 	{
 		StringBuilder sb = new StringBuilder();
 		try {
@@ -140,11 +145,8 @@ public class BaseServlet extends HttpServlet {
 	        while((line = br.readLine())!=null){
 	            sb.append(line);
 	        }
-		    return new JSONObject(sb.toString());
+		    return sb.toString();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -152,12 +154,12 @@ public class BaseServlet extends HttpServlet {
 		return null;
 	}
 	
-	protected void WriteJson(JSONObject jo, HttpServletResponse resp)
+	protected void Write(String jo, HttpServletResponse resp)
 	{
         PrintWriter out;
 		try {
 			out = resp.getWriter();
-	        out.write(jo.toString());
+	        out.write(jo);
 	    } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

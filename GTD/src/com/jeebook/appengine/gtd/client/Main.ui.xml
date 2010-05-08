@@ -27,11 +27,7 @@
 				</g:tab>
 				<g:tab>
 					<g:header size='7'>Projects</g:header>
-					<g:Label>able</g:Label>
-				</g:tab>
-				<g:tab>
-					<g:header size='7'>Contexts</g:header>
-					<g:SplitLayoutPanel>
+										<g:SplitLayoutPanel>
 						<g:west size='100'>
 							<shuffle:Navigation ui:field='navigation' />
 						</g:west>
@@ -40,6 +36,10 @@
 							<shuffle:CentrePanel ui:field='centrePanel' />
 						</g:center>
 					</g:SplitLayoutPanel>
+				</g:tab>
+				<g:tab>
+					<g:header size='7'>Contexts</g:header>
+					<shuffle:ContextPanel ui:field='context' />
 				</g:tab>
 			</g:TabLayoutPanel>
 

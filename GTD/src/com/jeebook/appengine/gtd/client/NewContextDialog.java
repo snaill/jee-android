@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -12,8 +13,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.jeebook.appengine.gtd.client.service.ContextService;
+import com.jeebook.appengine.gtd.client.service.DataListener;
 
-public class NewContextDialog extends DialogBox {
+public class NewContextDialog extends DialogBox implements DataListener {
 
 	private static NewContextDialogUiBinder uiBinder = GWT
 			.create(NewContextDialogUiBinder.class);
@@ -51,7 +53,7 @@ public class NewContextDialog extends DialogBox {
 
 	  @UiHandler("saveButton")
 	  void onSaveClicked(ClickEvent event) {
-		  ContextService cs = new ContextService();
+		  ContextService cs = new ContextService(this);
 		  cs.New(nameTextBox.getText());
 		  
 		  hide();
@@ -59,7 +61,7 @@ public class NewContextDialog extends DialogBox {
 	  
 	  @UiHandler("saveAndNewButton")
 	  void onSaveAndNewClicked(ClickEvent event) {
-		  ContextService cs = new ContextService();
+		  ContextService cs = new ContextService(this);
 		  cs.New(nameTextBox.getText());
 		  
 		  nameTextBox.setText("");
@@ -70,4 +72,9 @@ public class NewContextDialog extends DialogBox {
 	  void onCloseClicked(ClickEvent event) {
 	    hide();
 	  }
+	  
+		public void Update( Object sender, JSONValue jv )
+		{
+			
+		}
 }
