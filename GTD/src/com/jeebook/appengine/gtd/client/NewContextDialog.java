@@ -4,7 +4,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -12,10 +14,9 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.jeebook.appengine.gtd.client.service.ContextService;
-import com.jeebook.appengine.gtd.client.service.DataListener;
+import com.jeebook.appengine.gtd.client.service.AjaxRequest;
 
-public class NewContextDialog extends DialogBox implements DataListener {
+public class NewContextDialog extends DialogBox {
 
 	private static NewContextDialogUiBinder uiBinder = GWT
 			.create(NewContextDialogUiBinder.class);
@@ -53,16 +54,13 @@ public class NewContextDialog extends DialogBox implements DataListener {
 
 	  @UiHandler("saveButton")
 	  void onSaveClicked(ClickEvent event) {
-		  ContextService cs = new ContextService(this);
-		  cs.New(nameTextBox.getText());
-		  
+		  New();		  
 		  hide();
 	  }
 	  
 	  @UiHandler("saveAndNewButton")
 	  void onSaveAndNewClicked(ClickEvent event) {
-		  ContextService cs = new ContextService(this);
-		  cs.New(nameTextBox.getText());
+		  New();
 		  
 		  nameTextBox.setText("");
 		  hide();
@@ -73,8 +71,9 @@ public class NewContextDialog extends DialogBox implements DataListener {
 	    hide();
 	  }
 	  
-		public void Update( Object sender, JSONValue jv )
-		{
-			
+		void New() {
+			JSONObject cd = new JSONObject();
+			cd.put("name", new JSONString(nameTextBox.getText()));			
+		    new AjaxRequest(RequestBuilder.POST, "context/").send(cd.toString());
 		}
 }
