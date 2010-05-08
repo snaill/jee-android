@@ -31,8 +31,8 @@ public class Task extends Component<Task, TaskValue> {
 
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Key mKey;
-
+    private Long mId;
+    
     @Persistent
     private User user;
     
@@ -54,8 +54,8 @@ public class Task extends Component<Task, TaskValue> {
     @Persistent
     private Date mFinishDate;
     
-    public final Key getKey() {
-        return mKey;
+    public final long getKey() {
+        return mId;
     }
 
     public final User getUser() {
@@ -84,36 +84,5 @@ public class Task extends Component<Task, TaskValue> {
 
 	public final Date getFinishDate() {
 		return mFinishDate;
-	}
-	
-	public TaskValue toJson()
-	{
-	    KeyValue<TaskValue> keyValue = toKeyValue(mKey); 
-        KeyValue<ProjectValue> projectKey = toKeyValue(mProjectKey);
-        ArrayList<KeyValue<ContextValue>> contextKeys = toKeyValues(mContextKeys);
-
-        Builder builder = new Builder();
-        builder.setId(keyValue)
-	        .setTitle(mTitle)
-	        .setDetails(mDetails == null ? null : mDetails.getValue())
-	        .setProjectId(projectKey)
-	        .setContextIds(contextKeys)
-	        .setDueDate(mDueDate)
-	        .setFinishDate(mFinishDate);
-        return builder.build();
-	}
-	
-	public Task fromJson(User user, TaskValue value)
-	{
-        Task task = new Task();
-        task.mKey = toKey(value.getId());
-        task.user = user;
-        task.mTitle = value.getTitle();
-        task.mDetails = new Text(value.getDetails());
-        task.mProjectKey = toKey(value.getProjectId());
-        task.mContextKeys = toKeys(value.getContextIds());
-        task.mDueDate = value.getDueDate();
-        task.mFinishDate = value.getFinishDate();
-        return task;
 	}
 }

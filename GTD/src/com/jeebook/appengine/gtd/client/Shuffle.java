@@ -16,9 +16,6 @@ import com.jeebook.appengine.gtd.client.gin.ShuffleGinjector;
 public class Shuffle implements EntryPoint, IUploader.OnFinishUploaderHandler {
 
     interface GlobalResources extends ClientBundle {
-        @NotStrict
-        @Source("global.css")
-        CssResource css();
     }
 
     /**
@@ -26,9 +23,6 @@ public class Shuffle implements EntryPoint, IUploader.OnFinishUploaderHandler {
      * controls and hooking up event handler.
      */
     public void onModuleLoad() {
-        // Inject global styles.
-        GWT.<GlobalResources> create(GlobalResources.class).css()
-                .ensureInjected();
 
         ShuffleGinjector ginjector = GWT.create(ShuffleGinjector.class);
         Main main = ginjector.getMain();

@@ -10,6 +10,16 @@
     <welcome-file>Shuffle.html</welcome-file>
   </welcome-file-list>
 
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.LoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/shuffle/login</url-pattern>
+  </servlet-mapping> 
+  
 	<!-- Project Servlet -->  
   <servlet>
     <servlet-name>ProjectServlet</servlet-name>
@@ -18,7 +28,7 @@
   
   <servlet-mapping>
     <servlet-name>ProjectServlet</servlet-name>
-    <url-pattern>/api/project/*</url-pattern>
+    <url-pattern>/shuffle/project/*</url-pattern>
   </servlet-mapping> 
 
 	<!-- Context Servlet -->  
@@ -29,28 +39,32 @@
   
   <servlet-mapping>
     <servlet-name>ContextServlet</servlet-name>
-    <url-pattern>/api/context/*</url-pattern>
+    <url-pattern>/shuffle/context/*</url-pattern>
   </servlet-mapping> 
 
 	<!-- Action Servlet -->
   <servlet>
-    <servlet-name>ActionServlet</servlet-name>
-    <servlet-class>com.jeebook.appengine.gtd.server.service.Action</servlet-class>
+    <servlet-name>InboxServlet</servlet-name>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.ActionServlet</servlet-class>
+    <init-param> 
+       <param-name>type</param-name> 
+       <param-value>inbox</param-value> 
+     </init-param> 
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>ActionServlet</servlet-name>
-    <url-pattern>/api/action/*</url-pattern>
+    <servlet-name>InboxServlet</servlet-name>
+    <url-pattern>/shuffle/inbox</url-pattern>
   </servlet-mapping> 
     
   <servlet>
     <servlet-name>ActionsServlet</servlet-name>
-    <servlet-class>com.jeebook.appengine.gtd.server.service.Actions</servlet-class>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.ActionServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
     <servlet-name>ActionsServlet</servlet-name>
-    <url-pattern>/api/*_actions</url-pattern>
+    <url-pattern>/shuffle/*_actions</url-pattern>
   </servlet-mapping> 
   
   <context-param>
@@ -83,11 +97,6 @@
     <servlet-name>uploadServlet</servlet-name>
     <servlet-class>com.jeebook.appengine.gtd.server.service.RestoreServlet</servlet-class>
   </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>loginService</servlet-name>
-    <url-pattern>/shuffle/login</url-pattern>
-  </servlet-mapping>  
   
   <servlet-mapping>
     <servlet-name>taskServiceImpl</servlet-name>

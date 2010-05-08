@@ -22,11 +22,11 @@ import com.jeebook.appengine.gtd.client.model.ProjectValue.Builder;
 @SuppressWarnings("serial")
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Project implements Serializable {
-
+    
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Key mKey;
-
+    private Long id;
+    
     @Persistent
     private User mUser;
     
@@ -37,8 +37,8 @@ public class Project implements Serializable {
     private Key mDefaultContextKey;
     
     
-    public final Key getKey() {
-        return mKey;
+    public final long getKey() {
+        return id;
     }
     
     public final User getUser() {
@@ -51,27 +51,6 @@ public class Project implements Serializable {
 
     public final Key getDefaultContextKey() {
         return mDefaultContextKey;
-    }
-    
-    public final ProjectValue toProjectValue() {
-        KeyValue<ProjectValue> keyValue = toKeyValue(mKey); 
-        KeyValue<ContextValue> defaultContextKey = toKeyValue(mDefaultContextKey);
-
-        Builder builder = new Builder();
-        builder.setId(keyValue)
-            .setName(mName)
-            .setDefaultContextId(defaultContextKey);
-        return builder.build();
-    }
-
-    public static final Project fromProjectValue(User user, ProjectValue value) {
-        Project project = new Project();
-        project.mKey = toKey(value.getId());
-        project.mName = value.getName();
-        project.mDefaultContextKey = toKey(value.getDefaultContextId());
-        project.mUser = user;
-        return project;
-    }
-    
+    }    
 }
 

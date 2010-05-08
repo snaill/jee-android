@@ -3,22 +3,12 @@
   xmlns:g='urn:import:com.google.gwt.user.client.ui'
   xmlns:shuffle='urn:import:com.jeebook.appengine.gtd.client'>
 
-  <ui:image field='gradient' src='gradient_bg_dark.png' repeatStyle='Horizontal'/>
-
   <ui:style>
   .outer {
     border-left: 1px solid #999;
     border-bottom: 1px solid #999;
     cursor: pointer;
     cursor: hand;
-  }
-
-  @sprite .header {
-  	gwt-image: 'gradient';
-  	background-color: #d3d6dd;
-    table-layout: fixed;
-    width: 100%;
-    height: 100%;
   }
 
   .header td {

@@ -63,7 +63,7 @@ public class TaskServiceImpl extends RemoteServiceServlet implements
         } finally {
             JdoUtils.closePm();
         }
-        return task.toJson();
+        return null;//task.toJson();
     }
 
     private void setFilter(Query query, TaskFilter filter) {

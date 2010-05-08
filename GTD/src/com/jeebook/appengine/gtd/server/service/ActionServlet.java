@@ -15,10 +15,11 @@ import com.google.appengine.api.users.User;
 import com.jeebook.appengine.gtd.server.model.Context;
 import com.jeebook.appengine.gtd.server.persistence.JdoUtils;
 
-public class ContextServlet extends BaseServlet {
+public class ActionServlet extends BaseServlet {
 	
 	protected JSONObject New(User user, JSONObject jo) {         
 		Context context = new Context();
+	//	context.setKey(JdoUtils.getPm().)
 		context.setUser(user);
 		try {
 			context.setName(jo.get("name").toString());
@@ -30,12 +31,13 @@ public class ContextServlet extends BaseServlet {
 		//
 	    PersistenceManager pm = JdoUtils.getPm();
 	    try {
-	        context = pm.makePersistent(context);
+	
+	        pm.makePersistent(context);
 	    } finally {
 	        JdoUtils.closePm();
 	    }
 	    
-	    return new JSONObject(context);
+	    return null;
   }
 	
 	protected  void	doGet(HttpServletRequest req, HttpServletResponse resp) 
