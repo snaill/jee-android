@@ -2,7 +2,9 @@ package com.jeebook.appengine.gtd.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -11,12 +13,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.jeebook.appengine.gtd.client.service.ContextService;
-import com.jeebook.appengine.gtd.client.service.DataListener;
+import com.jeebook.appengine.gtd.client.service.AjaxRequest;
 
-public class ContextPanel extends Composite implements DataListener {
+public class ContextPanel extends Composite {
 
 	private static ContextPanelUiBinder uiBinder = GWT
 			.create(ContextPanelUiBinder.class);
@@ -31,8 +31,14 @@ public class ContextPanel extends Composite implements DataListener {
 		initWidget(uiBinder.createAndBindUi(this));
 		button.setText("");
 		
-		ContextService cs = new ContextService(this);
-		cs.Get("");
+		new AjaxRequest(RequestBuilder.GET, "context/") {
+			
+			@Override
+			public void onSuccess(String response){
+				JSONValue jv = JSONParser.parse(response);
+				update( null, jv );
+			}
+		}.send(null);
 	}
 
 	@UiHandler("button")
@@ -40,7 +46,7 @@ public class ContextPanel extends Composite implements DataListener {
 		Window.alert("Hello!");
 	}
 
-	public void Update( Object sender, JSONValue jv )
+	public void update( Object sender, JSONValue jv )
 	{
 		JSONArray ja = jv.isArray();
 		for ( int i = 0; i < ja.size(); i ++ )
