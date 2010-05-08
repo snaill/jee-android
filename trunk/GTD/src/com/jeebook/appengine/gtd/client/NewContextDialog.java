@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.jeebook.appengine.gtd.client.service.ContextService;
 
 public class NewContextDialog extends DialogBox {
 
@@ -50,18 +51,16 @@ public class NewContextDialog extends DialogBox {
 
 	  @UiHandler("saveButton")
 	  void onSaveClicked(ClickEvent event) {
-//		  ContextData	cd = new ContextData();
-//		  cd.setName(nameTextBox.getText());
-//		  ContextData.New("/api/", cd);
+		  ContextService cs = new ContextService();
+		  cs.New(nameTextBox.getText());
 		  
 		  hide();
 	  }
 	  
 	  @UiHandler("saveAndNewButton")
 	  void onSaveAndNewClicked(ClickEvent event) {
-//		  ContextData	cd = new ContextData();
-//		  cd.setName(nameTextBox.getText());
-//		  ContextData.New("/api/", cd);
+		  ContextService cs = new ContextService();
+		  cs.New(nameTextBox.getText());
 		  
 		  nameTextBox.setText("");
 		  hide();
