@@ -24,7 +24,7 @@ public class Context implements Serializable {
     @Persistent
 	private String mName;
 	
-	public final long getKey() {
+	public final long getId() {
 		return mId;
 	}
 
@@ -36,8 +36,8 @@ public class Context implements Serializable {
 		return mName;
 	}
 	
-	public final void setKey( long id ) {
-		mId = id;;
+	public final void setId( long id ) {
+		mId = id;
 	}
 
 	public final void setUser( User user ) {
@@ -50,7 +50,7 @@ public class Context implements Serializable {
 	
 	public static Context fromValue( User user, ContextValue value ) {
 		Context context = new Context();
-		context.setKey(value.getKey());
+		context.setId(value.getId());
 		context.setName(value.getName());
 		context.setUser(user);
 		return context;
@@ -66,7 +66,7 @@ public class Context implements Serializable {
 	
 	public ContextValue toValue() {
 		ContextValue value = new ContextValue();
-		value.setKey(getKey());
+		value.setId(getId());
 		value.setName(getName());
 		return value;
 	}

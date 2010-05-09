@@ -1,125 +1,79 @@
 package com.jeebook.appengine.gtd.server.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.appengine.api.users.User;
 import com.jeebook.appengine.gtd.server.model.Project;
+import com.jeebook.appengine.gtd.server.model.ProjectValue;
 import com.jeebook.appengine.gtd.server.persistence.JdoUtils;
-import org.json.*;
 
+@SuppressWarnings("serial")
 public class ProjectServlet extends BaseServlet {
-	protected  void	doGet(HttpServletRequest req, HttpServletResponse resp) 
-	{
-//		if ( false == checkUser(resp) )
-//			return;
-		
-		String id = req.getPathInfo();
-		if ( id == null )
-		{
-	        PersistenceManager pm = JdoUtils.getPm();
-	        Query query = pm.newQuery(Project.class);
-	        List<Project> projs = (List<Project>)query.execute();
-	        Project proj = pm.getObjectById(Project.class, id);
-			JSONArray	ja = new JSONArray(projs);
-	        PrintWriter out;
-			try {
-				out = resp.getWriter();
-		        out.write(ja.toString());
-		    } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		else
-		{
-	        PersistenceManager pm = JdoUtils.getPm();
-	        Project proj = pm.getObjectById(Project.class, id);
-	        JSONObject jo = new JSONObject(proj);
-	        PrintWriter out;
-			try {
-				out = resp.getWriter();
-		        out.write(jo.toString());
-		    } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 	
-	protected  void	doPost(HttpServletRequest req, HttpServletResponse resp) 
-	{
-        StringBuilder sb = new StringBuilder();
+	@Override
+	protected String New(User user, String json) {
+
+		ProjectValue value = ProjectValue.fromJson(json);
+		Project project = Project.fromValue(user, value);
+
+		//
+		PersistenceManager pm = JdoUtils.getPm();
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream)req.getInputStream()));
-	        String line = null;
-	        while((line = br.readLine())!=null){
-	            sb.append(line);
-	        }
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			project = pm.makePersistent(project);
+		} finally {
+			JdoUtils.closePm();
 		}
-        Project proj = (Project)JSONObject.stringToValue(sb.toString());
-		
-        PersistenceManager pm = JdoUtils.getPm();
-        try {
-            pm.makePersistent(proj);
-        } finally {
-            JdoUtils.closePm();
-        }
-	}
-	
-	protected  void	doDelete(HttpServletRequest req, HttpServletResponse resp) 
-	{
-		String id = req.getPathInfo();
-		if ( id == null )
-			return;
-		
-	    PersistenceManager pm = JdoUtils.getPm();
-        Project proj = null;
-        try {
-        	proj = pm.getObjectById(Project.class, id);
-            pm.deletePersistent(proj);
-        } finally {
-            JdoUtils.closePm();
-        }
-	}
-		
-	protected  void	doPut(HttpServletRequest req, HttpServletResponse resp) 
-	{
-		String id = req.getPathInfo();
 
-		StringBuilder sb = new StringBuilder();
+		value = project.toValue();
+		return value.toJson();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected String Get(User user) {
+		PersistenceManager pm = JdoUtils.getPm();
+		Query query = pm.newQuery(Project.class);
+		List<Project> projects = (List<Project>)query.execute();
+		List<ProjectValue> values = Project.toValue(projects);
+		return ProjectValue.toJson(values);
+	}
+
+	@Override
+	protected String Get(String id) {
+		PersistenceManager pm = JdoUtils.getPm();
+		Project project = pm.getObjectById(Project.class, id);
+		List<ProjectValue> values = new ArrayList<ProjectValue>();
+		values.add(project.toValue());
+		return ProjectValue.toJson(values);
+	}
+
+	@Override
+	protected String Delete(String id) {
+		PersistenceManager pm = JdoUtils.getPm();
+		Project project = null;
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream)req.getInputStream()));
-	        String line = null;
-	        while((line = br.readLine())!=null){
-	            sb.append(line);
-	        }
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			project = pm.getObjectById(Project.class, id);
+			pm.deletePersistent(project);
+		} finally {
+			JdoUtils.closePm();
 		}
-        Project proj = (Project)JSONObject.stringToValue(sb.toString());
-
-        //
-        PersistenceManager pm = JdoUtils.getPm();
-        try {
-        	Project proj2 = pm.getObjectById(Project.class, id);
-	
-        } finally {
-            JdoUtils.closePm();
-        }		
+		
+		return project.toValue().toJson();
 	}
+	
+	@Override
+	protected void Modify(String json) {
+		ProjectValue value = ProjectValue.fromJson(json);
 
+		//
+		PersistenceManager pm = JdoUtils.getPm();
+		try {
+			Project project = pm.getObjectById(Project.class, value.getId());
+			project.setName(value.getName());
+		} finally {
+			JdoUtils.closePm();
+		}
+	}
 }

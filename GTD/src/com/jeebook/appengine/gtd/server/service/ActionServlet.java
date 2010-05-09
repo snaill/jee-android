@@ -1,125 +1,80 @@
 package com.jeebook.appengine.gtd.server.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import javax.jdo.PersistenceManager;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import javax.jdo.Query;
 import com.google.appengine.api.users.User;
-import com.jeebook.appengine.gtd.server.model.Context;
+import com.jeebook.appengine.gtd.server.model.Action;
+import com.jeebook.appengine.gtd.server.model.ActionValue;
 import com.jeebook.appengine.gtd.server.persistence.JdoUtils;
 
+@SuppressWarnings("serial")
 public class ActionServlet extends BaseServlet {
 	
-	protected JSONObject New(User user, JSONObject jo) {         
-		Context context = new Context();
-	//	context.setKey(JdoUtils.getPm().)
-		context.setUser(user);
-		try {
-			context.setName(jo.get("name").toString());
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
+	@Override
+	protected String New(User user, String json) {
+
+		ActionValue value = ActionValue.fromJson(json);
+		Action action = Action.fromValue(user, value);
+
 		//
-	    PersistenceManager pm = JdoUtils.getPm();
-	    try {
-	
-	        pm.makePersistent(context);
-	    } finally {
-	        JdoUtils.closePm();
-	    }
-	    
-	    return null;
-  }
-	
-	protected  void	doGet(HttpServletRequest req, HttpServletResponse resp) 
-	{
-/*		if ( false == checkUser(resp) )
-			return;
-		
-		String id = req.getPathInfo();
-		if ( id == null )
-		{
-	        PersistenceManager pm = JdoUtils.getPm();
-	        Query query = pm.newQuery(Project.class);
-	        List<Project> projs = (List<Context>)query.execute();
-	        Project proj = pm.getObjectById(Project.class, id);
-			JSONArray	ja = new JSONArray(projs);
-	        PrintWriter out;
-			try {
-				out = resp.getWriter();
-		        out.write(ja.toString());
-		    } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		else
-		{
-	        PersistenceManager pm = JdoUtils.getPm();
-	        Project proj = pm.getObjectById(Project.class, id);
-	        JSONObject jo = new JSONObject(proj);
-	        PrintWriter out;
-			try {
-				out = resp.getWriter();
-		        out.write(jo.toString());
-		    } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-*/	}
-
-	protected  void	doDelete(HttpServletRequest req, HttpServletResponse resp) 
-	{
-		String id = req.getPathInfo();
-		if ( id == null )
-			return;
-		
-	    PersistenceManager pm = JdoUtils.getPm();
-        Context proj = null;
-        try {
-        	proj = pm.getObjectById(Context.class, id);
-            pm.deletePersistent(proj);
-        } finally {
-            JdoUtils.closePm();
-        }
-	}
-		
-	protected  void	doPut(HttpServletRequest req, HttpServletResponse resp) 
-	{
-		String id = req.getPathInfo();
-
-		StringBuilder sb = new StringBuilder();
+		PersistenceManager pm = JdoUtils.getPm();
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream)req.getInputStream()));
-	        String line = null;
-	        while((line = br.readLine())!=null){
-	            sb.append(line);
-	        }
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			action = pm.makePersistent(action);
+		} finally {
+			JdoUtils.closePm();
 		}
-		Context proj = (Context)JSONObject.stringToValue(sb.toString());
 
-        //
-        PersistenceManager pm = JdoUtils.getPm();
-        try {
-        	Context proj2 = pm.getObjectById(Context.class, id);
+		value = action.toValue();
+		return value.toJson();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected String Get(User user) {
+		PersistenceManager pm = JdoUtils.getPm();
+		Query query = pm.newQuery(Action.class);
+		List<Action> actions = (List<Action>)query.execute();
+		List<ActionValue> values = Action.toValue(actions);
+		return ActionValue.toJson(values);
+	}
+
+	@Override
+	protected String Get(String id) {
+		PersistenceManager pm = JdoUtils.getPm();
+		Action action = pm.getObjectById(Action.class, id);
+		List<ActionValue> values = new ArrayList<ActionValue>();
+		values.add(action.toValue());
+		return ActionValue.toJson(values);
+	}
+
+	@Override
+	protected String Delete(String id) {
+		PersistenceManager pm = JdoUtils.getPm();
+		Action action = null;
+		try {
+			action = pm.getObjectById(Action.class, id);
+			pm.deletePersistent(action);
+		} finally {
+			JdoUtils.closePm();
+		}
+		
+		return action.toValue().toJson();
+	}
 	
-        } finally {
-            JdoUtils.closePm();
-        }		
+	@Override
+	protected void Modify(String json) {
+		ActionValue value = ActionValue.fromJson(json);
+
+		//
+		PersistenceManager pm = JdoUtils.getPm();
+		try {
+			Action action = pm.getObjectById(Action.class, value.getId());
+			action.setName(value.getName());
+		} finally {
+			JdoUtils.closePm();
+		}
 	}
 
 }

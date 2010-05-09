@@ -7,7 +7,7 @@
 
 	<!-- Home URL -->  
   <welcome-file-list>
-    <welcome-file>Shuffle.html</welcome-file>
+    <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
   <servlet>
@@ -58,13 +58,45 @@
   </servlet-mapping> 
     
   <servlet>
-    <servlet-name>ActionsServlet</servlet-name>
+    <servlet-name>NextActionServlet</servlet-name>
     <servlet-class>com.jeebook.appengine.gtd.server.service.ActionServlet</servlet-class>
+    <init-param> 
+       <param-name>type</param-name> 
+       <param-value>nextAction</param-value> 
+     </init-param> 
   </servlet>
-  
+
   <servlet-mapping>
-    <servlet-name>ActionsServlet</servlet-name>
-    <url-pattern>/shuffle/*_actions</url-pattern>
+    <servlet-name>NextActionServlet</servlet-name>
+    <url-pattern>/shuffle/nextaction</url-pattern>
+  </servlet-mapping> 
+
+  <servlet>
+    <servlet-name>WaitingforServlet</servlet-name>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.ActionServlet</servlet-class>
+    <init-param> 
+       <param-name>type</param-name> 
+       <param-value>waitingfor</param-value> 
+     </init-param> 
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>WaitingforServlet</servlet-name>
+    <url-pattern>/shuffle/waitingfor</url-pattern>
+  </servlet-mapping> 
+  
+  <servlet>
+    <servlet-name>SomedayServlet</servlet-name>
+    <servlet-class>com.jeebook.appengine.gtd.server.service.ActionServlet</servlet-class>
+    <init-param> 
+       <param-name>type</param-name> 
+       <param-value>someday</param-value> 
+     </init-param> 
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>WaitingforServlet</servlet-name>
+    <url-pattern>/shuffle/someday</url-pattern>
   </servlet-mapping> 
   
   <context-param>
@@ -83,29 +115,4 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
     
-  <servlet>
-    <servlet-name>loginService</servlet-name>
-    <servlet-class>com.jeebook.appengine.gtd.server.service.LoginServiceImpl</servlet-class>
-  </servlet>
-    
-  <servlet>
-    <servlet-name>taskServiceImpl</servlet-name>
-    <servlet-class>com.jeebook.appengine.gtd.server.service.TaskServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet>
-    <servlet-name>uploadServlet</servlet-name>
-    <servlet-class>com.jeebook.appengine.gtd.server.service.RestoreServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>taskServiceImpl</servlet-name>
-    <url-pattern>/shuffle/task</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>uploadServlet</servlet-name>
-    <url-pattern>/shuffle/restore</url-pattern>
-  </servlet-mapping>  
-
 </web-app>

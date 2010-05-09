@@ -12,7 +12,7 @@ public class ContextValue {
     
 	private String mName;
 	
-	public final long getKey() {
+	public final long getId() {
 		return mId;
 	}
 
@@ -20,7 +20,7 @@ public class ContextValue {
 		return mName;
 	}
 	
-	public final void setKey( long id ) {
+	public final void setId( long id ) {
 		mId = id;
 	}
 	
@@ -33,8 +33,8 @@ public class ContextValue {
 		JSONObject jo;
 		try {
 			jo = new JSONObject(json);
-			if ( jo.has("key") )
-				value.setKey( jo.getInt("key") );
+			if ( jo.has("id") )
+				value.setId( jo.getInt("id") );
 			if ( jo.has("name") )
 				value.setName( jo.getString("name") );	
 		} catch (JSONException e) {
@@ -53,7 +53,7 @@ public class ContextValue {
 		
 		JSONObject jo = new JSONObject();
 		try {
-			jo.put("key", getKey());
+			jo.put("id", getId());
 			jo.put("name", getName());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

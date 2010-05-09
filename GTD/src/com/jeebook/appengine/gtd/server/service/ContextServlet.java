@@ -1,18 +1,9 @@
 package com.jeebook.appengine.gtd.server.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.json.*;
-
 import com.google.appengine.api.users.User;
 import com.jeebook.appengine.gtd.server.model.Context;
 import com.jeebook.appengine.gtd.server.model.ContextValue;
@@ -39,11 +30,12 @@ public class ContextServlet extends BaseServlet {
 		return value.toJson();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected String Get(User user) {
 		PersistenceManager pm = JdoUtils.getPm();
 		Query query = pm.newQuery(Context.class);
-		List<Context> contexts = (List<Context>) query.execute();
+		List<Context> contexts = (List<Context>)query.execute();
 		List<ContextValue> values = Context.toValue(contexts);
 		return ContextValue.toJson(values);
 	}
@@ -78,7 +70,7 @@ public class ContextServlet extends BaseServlet {
 		//
 		PersistenceManager pm = JdoUtils.getPm();
 		try {
-			Context context = pm.getObjectById(Context.class, value.getKey());
+			Context context = pm.getObjectById(Context.class, value.getId());
 			context.setName(value.getName());
 		} finally {
 			JdoUtils.closePm();
