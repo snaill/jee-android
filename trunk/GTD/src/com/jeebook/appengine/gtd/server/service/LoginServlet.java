@@ -26,7 +26,7 @@ public class LoginServlet extends BaseServlet {
 			{
 				jo.put("nikename", user.getNickname());
 				jo.put("email", user.getEmail());
-				jo.put("url", userService.createLogoutURL("/Shuffle.html"));				
+				jo.put("url", userService.createLogoutURL("/index.html"));				
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
