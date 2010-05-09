@@ -20,88 +20,68 @@ import com.jeebook.appengine.gtd.server.persistence.JdoUtils;
 
 @SuppressWarnings("serial")
 public class ContextServlet extends BaseServlet {
-	
-	 @Override
-	protected String New(User user, String json) {    
-		
-		 ContextValue value = ContextValue.fromJson(json);
-		 Context context = Context.fromValue(user, value);
-	
+
+	@Override
+	protected String New(User user, String json) {
+
+		ContextValue value = ContextValue.fromJson(json);
+		Context context = Context.fromValue(user, value);
+
 		//
 		PersistenceManager pm = JdoUtils.getPm();
 		try {
-		    context = pm.makePersistent(context);
+			context = pm.makePersistent(context);
 		} finally {
-		    JdoUtils.closePm();
+			JdoUtils.closePm();
 		}
-		
+
 		value = context.toValue();
 		return value.toJson();
 	}
-	 
-	 @Override
-	@SuppressWarnings("unchecked")
-	protected String Get(User user, String id) { 
-	 	
-		if ( id != "/" )
-		{
-	        PersistenceManager pm = JdoUtils.getPm();
-	        Query query = pm.newQuery(Context.class);
-	        List<Context> contexts = (List<Context>)query.execute();
-	        List<ContextValue> values = Context.toValue(contexts);
-	        return ContextValue.toJson(values);
-		}
-		else
-		{
-	        PersistenceManager pm = JdoUtils.getPm();
-	        Context context = pm.getObjectById(Context.class, id);
-	        List<ContextValue> values = new ArrayList<ContextValue>();
-	        values.add(context.toValue());
-	        return ContextValue.toJson(values);
-		}
-	}
-	
-	protected  void	doDelete2(HttpServletRequest req, HttpServletResponse resp) 
-	{
-		String id = req.getPathInfo();
-		if ( id == null )
-			return;
-		
-	    PersistenceManager pm = JdoUtils.getPm();
-        Context proj = null;
-        try {
-        	proj = pm.getObjectById(Context.class, id);
-            pm.deletePersistent(proj);
-        } finally {
-            JdoUtils.closePm();
-        }
-	}
-		
-	protected  void	doPut2(HttpServletRequest req, HttpServletResponse resp) 
-	{
-		String id = req.getPathInfo();
 
-		StringBuilder sb = new StringBuilder();
+	@Override
+	protected String Get(User user) {
+		PersistenceManager pm = JdoUtils.getPm();
+		Query query = pm.newQuery(Context.class);
+		List<Context> contexts = (List<Context>) query.execute();
+		List<ContextValue> values = Context.toValue(contexts);
+		return ContextValue.toJson(values);
+	}
+
+	@Override
+	protected String Get(String id) {
+		PersistenceManager pm = JdoUtils.getPm();
+		Context context = pm.getObjectById(Context.class, id);
+		List<ContextValue> values = new ArrayList<ContextValue>();
+		values.add(context.toValue());
+		return ContextValue.toJson(values);
+	}
+
+	@Override
+	protected String Delete(String id) {
+		PersistenceManager pm = JdoUtils.getPm();
+		Context context = null;
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream)req.getInputStream()));
-	        String line = null;
-	        while((line = br.readLine())!=null){
-	            sb.append(line);
-	        }
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			context = pm.getObjectById(Context.class, id);
+			pm.deletePersistent(context);
+		} finally {
+			JdoUtils.closePm();
 		}
-		Context proj = (Context)JSONObject.stringToValue(sb.toString());
-
-        //
-        PersistenceManager pm = JdoUtils.getPm();
-        try {
-        	Context proj2 = pm.getObjectById(Context.class, id);
-	
-        } finally {
-            JdoUtils.closePm();
-        }		
+		
+		return context.toValue().toJson();
 	}
+	
+	@Override
+	protected void Modify(String json) {
+		ContextValue value = ContextValue.fromJson(json);
 
+		//
+		PersistenceManager pm = JdoUtils.getPm();
+		try {
+			Context context = pm.getObjectById(Context.class, value.getKey());
+			context.setName(value.getName());
+		} finally {
+			JdoUtils.closePm();
+		}
+	}
 }

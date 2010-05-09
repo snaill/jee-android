@@ -19,8 +19,8 @@ import org.json.*;
 public class ProjectServlet extends BaseServlet {
 	protected  void	doGet(HttpServletRequest req, HttpServletResponse resp) 
 	{
-		if ( false == checkUser(resp) )
-			return;
+//		if ( false == checkUser(resp) )
+//			return;
 		
 		String id = req.getPathInfo();
 		if ( id == null )
