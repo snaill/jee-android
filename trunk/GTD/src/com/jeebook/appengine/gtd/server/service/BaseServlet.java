@@ -18,10 +18,11 @@ import com.google.gwt.core.client.GWT;
 @SuppressWarnings("serial")
 public class BaseServlet extends HttpServlet {
 
+	protected String Get(User user, Long id) { return null; }
 	protected String Get(User user, String pathInfo) { return null; }
-	protected String New(User user, String jo) { return null; }
-	protected String Delete(User user, String pathInfo) { return null; }
-	protected String Modify(User user, String jo) {	return null; }
+	protected String New(User user, String json) { return null; }
+	protected String Delete(User user, String id) { return null; }
+	protected String Modify(User user, String json) { return null; }
 	
 	 @Override
 	protected  void	doGet(HttpServletRequest req, HttpServletResponse resp) 

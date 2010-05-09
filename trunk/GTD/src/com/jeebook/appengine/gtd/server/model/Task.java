@@ -1,33 +1,16 @@
 package com.jeebook.appengine.gtd.server.model;
 
-import static com.jeebook.appengine.gtd.server.persistence.JdoUtils.toKey;
-import static com.jeebook.appengine.gtd.server.persistence.JdoUtils.toKeyValue;
-import static com.jeebook.appengine.gtd.server.persistence.JdoUtils.toKeyValues;
-import static com.jeebook.appengine.gtd.server.persistence.JdoUtils.toKeys;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-
-
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.users.User;
-import com.jeebook.appengine.gtd.client.model.ContextValue;
-import com.jeebook.appengine.gtd.client.model.KeyValue;
-import com.jeebook.appengine.gtd.client.model.ProjectValue;
-import com.jeebook.appengine.gtd.client.model.TaskValue;
-import com.jeebook.appengine.gtd.client.model.TaskValue.Builder;
 
-@SuppressWarnings("serial")
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Task extends Component<Task, TaskValue> {
+public class Task {
 
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -43,10 +26,10 @@ public class Task extends Component<Task, TaskValue> {
     private Text mDetails;
 
     @Persistent
-    private Key mProjectKey;
+    private Long mProjectKey;
     
     @Persistent
-    private List<Key> mContextKeys;
+    private Long mContextKey;
     
     @Persistent
     private Date mDueDate;
@@ -70,12 +53,12 @@ public class Task extends Component<Task, TaskValue> {
 		return mDetails;
 	}
 
-	public final Key getProjectId() {
+	public final Long getProjectId() {
 		return mProjectKey;
 	}
 
-	public final List<Key> getContextIds() {
-		return mContextKeys;
+	public final Long getContextIds() {
+		return mContextKey;
 	}
 
 	public final Date getDueDate() {
