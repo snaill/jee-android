@@ -8,8 +8,6 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -18,97 +16,58 @@ import com.google.gwt.core.client.GWT;
 @SuppressWarnings("serial")
 public class BaseServlet extends HttpServlet {
 
-	protected String Get(User user, Long id) { return null; }
-	protected String Get(User user, String pathInfo) { return null; }
+	protected String Get(String id) { return null; }
+	protected String Get(User user) { return null; }
 	protected String New(User user, String json) { return null; }
-	protected String Delete(User user, String id) { return null; }
-	protected String Modify(User user, String json) { return null; }
+	protected String Delete(String id) { return null; }
+	protected void Modify(String json) { }
 	
 	 @Override
 	protected  void	doGet(HttpServletRequest req, HttpServletResponse resp) 
 	{
-		//
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-    	if ( null == user )
-    	{
-    		try {
-				resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, userService.createLoginURL(GWT.getHostPageBaseURL()));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		return;
-    	}
+		 //
+		 User user = checkUser(resp);
+		 if ( null == user )
+			 return;
     	
-		//
-		String pi = req.getPathInfo();
-		String jo = Get(user, pi);
-		
-		//
-		if ( jo == null || jo.isEmpty() )
-		{
-			resp.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
-			return;
-		}
-		
-		//
-		Write(jo, resp);
+		 //
+		 String id = getId(req);
+		 String json;
+		 if ( id.isEmpty() )
+			 json = Get(user);
+		 else
+			 json = Get(id);
+		 
+		 Write(json, resp);
 	}
 	
 	 @Override
 	protected  void	doPost(HttpServletRequest req, HttpServletResponse resp) 
 	{
-		//
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-    	if ( null == user )
-    	{
-    		resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-    		
-    		JSONObject jo = new JSONObject();
-    		try {
-				jo.put("url", userService.createLoginURL("Shuffle.html"));
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		Write(jo.toString(), resp);
-    		return;
-    	}
+		 //
+		 User user = checkUser(resp);
+		 if ( null == user )
+			 return;
 		
 		//
-		String	jo = Read(req);
-        jo = New(user, jo);
-		
-        //
-		if ( jo == null )
-		{
-			resp.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
-			return;
-		}
+		String	json = Read(req);
+        json = New(user, json);
 		
 		//
-		Write(jo, resp);
+		Write(json, resp);
 	}
 	
 	 @Override
 	protected  void	doDelete(HttpServletRequest req, HttpServletResponse resp) 
 	{
-		//
-		if ( false == checkUser(resp) )
-			return;
+		 //
+		 User user = checkUser(resp);
+		 if ( null == user )
+			 return;
 		
 		//
-		String pi = req.getPathInfo();
-		String jo = Delete(getUser(), pi);
-		
-		//
-		if ( jo == null )
-		{
-			resp.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
-			return;
-		}
+		String id = getId(req);
+		String jo = Delete(id);
 		
 		//
 		Write(jo, resp);
@@ -117,26 +76,16 @@ public class BaseServlet extends HttpServlet {
 	 @Override
 	protected  void	doPut(HttpServletRequest req, HttpServletResponse resp) 
 	{
-		//
-		if ( false == checkUser(resp) )
-			return;
+		 //
+		 User user = checkUser(resp);
+		 if ( null == user )
+			 return;
 		
 		//
-		String	jo = Read(req);
-        jo = Modify(getUser(), jo);
-		
-        //
-		if ( jo == null )
-		{
-			resp.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
-			return;
-		}
-		
-		//
-		Write(jo, resp);
+		String	json = Read(req);
+        Modify(json);
 	}
 
-	
 	protected String Read(HttpServletRequest req)
 	{
 		StringBuilder sb = new StringBuilder();
@@ -167,16 +116,27 @@ public class BaseServlet extends HttpServlet {
 		}
 	}
 	
-    protected User getUser() {
+	protected String getId( HttpServletRequest req ){
+		String id = req.getPathInfo();
+		if ( id.startsWith("/"))
+			id = id.substring(1);
+		return id;
+	}
+	
+    protected User checkUser(HttpServletResponse resp) {
         UserService userService = UserServiceFactory.getUserService();
-        return userService.getCurrentUser();
-    }
-    
-    protected boolean checkUser(HttpServletResponse resp) {
-    	if ( null != getUser() )
-    		return true;
+        User user = userService.getCurrentUser();
+    	if ( null == user )
+    	{
+    		try {
+				resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, userService.createLoginURL(GWT.getHostPageBaseURL()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		return null;
+    	}
     	
-    	resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-    	return false;
+    	return user;
     }
 }
