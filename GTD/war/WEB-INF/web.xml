@@ -104,15 +104,5 @@
     <param-name>maxSize</param-name>
     <param-value>30000</param-value>
   </context-param>
-      
-  <filter>
-    <filter-name>PersistenceFilter</filter-name>
-    <filter-class>com.jeebook.appengine.gtd.server.persistence.PersistenceFilter</filter-class>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>PersistenceFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-    
+   
 </web-app>
