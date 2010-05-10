@@ -17,18 +17,12 @@ package com.jeebook.appengine.gtd.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
@@ -47,8 +41,6 @@ public class TopPanel extends Composite {
 	interface TopPanelUiBinder extends UiBinder<Widget, TopPanel> {
 	}
 
-  @Inject ShuffleConstants constants;
-  
   @UiField SpanElement emailSpan;
   @UiField Anchor loginLink;
   @UiField Anchor newActionLink;

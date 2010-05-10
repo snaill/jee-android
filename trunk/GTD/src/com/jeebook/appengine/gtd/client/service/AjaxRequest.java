@@ -29,8 +29,6 @@ public class AjaxRequest {
 						JSONValue respValue = JSONParser.parse(response.getText());
 						JSONObject jo = respValue.isObject();
 						String url = jo.get("url").isString().stringValue();
-						url = url.substring(1);
-						url = GWT.getHostPageBaseURL() + url;
 						redirect(url);
 						break;
 					}

@@ -129,7 +129,7 @@ public class BaseServlet extends HttpServlet {
     	if ( null == user )
     	{
     		try {
-				resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, userService.createLoginURL(GWT.getHostPageBaseURL()));
+				resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, userService.createLoginURL("/Shuffle.html"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

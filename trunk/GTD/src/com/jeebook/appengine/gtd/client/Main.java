@@ -14,14 +14,10 @@ public class Main extends ResizeComposite {
   private static final Binder binder = GWT.create(Binder.class);
 
   @UiField(provided=true) TopPanel topPanel;
-  @UiField(provided=true) Navigation navigation;
-  @UiField(provided=true) CentrePanel centrePanel;
 
   @Inject
-  public Main(TopPanel topPanel, Navigation navigation, CentrePanel centrePanel) {
+  public Main(TopPanel topPanel) {
   	this.topPanel = topPanel;
-  	this.navigation = navigation;
-  	this.centrePanel = centrePanel;
   	
     // Create the UI defined in Main.ui.xml.
   	DockLayoutPanel outer = binder.createAndBindUi(this);
