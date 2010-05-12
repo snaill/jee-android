@@ -7,24 +7,24 @@
 <g:HTMLPanel>
 	<table>
 		<tr>
-			<td>Title:</td>
-			<td><g:TextBox ui:field="titleTextBox"></g:TextBox></td>
+			<td>Name:</td>
+			<td><g:TextBox ui:field="nameTextBox"></g:TextBox></td>
 		</tr>
 		<tr>
 			<td>Project:</td>
-			<td><g:ListBox></g:ListBox><g:Button ui:field="addProjectButton">+</g:Button></td>
+			<td><g:ListBox ui:field="projectListBox"></g:ListBox><g:Button ui:field="addProjectButton">+</g:Button></td>
 		</tr>
 		<tr>
 			<td>Context:</td>
-			<td><g:ListBox></g:ListBox><g:Button ui:field="addContextButton">+</g:Button></td>
+			<td><g:ListBox ui:field="contextListBox"></g:ListBox><g:Button ui:field="addContextButton">+</g:Button></td>
 		</tr>
 		<tr>
 			<td>Detail:</td>
-			<td><g:TextArea></g:TextArea></td>
+			<td><g:TextArea ui:field="detailTextArea"></g:TextArea></td>
 		</tr>
 		<tr>
 			<td>Due Time:</td>
-			<td><d:DatePicker></d:DatePicker></td>
+			<td><d:DatePicker ui:field="dueTimeDatePicker"></d:DatePicker></td>
 		</tr>
 	</table>
 </g:HTMLPanel>

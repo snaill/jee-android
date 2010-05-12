@@ -28,7 +28,7 @@ public class NewContextDialog extends DialogBox {
 	
 	public NewContextDialog() {
 	    // Use this opportunity to set the dialog's caption.
-	    setText("About the Mail Sample");
+	    setText("Context");
 	    setWidget(uiBinder.createAndBindUi(this));
 
 	    setAnimationEnabled(true);
