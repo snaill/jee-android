@@ -63,7 +63,7 @@ public class NewContextDialog extends DialogBox {
 		  New();
 		  
 		  nameTextBox.setText("");
-		  hide();
+		  nameTextBox.setFocus(true);
 	  }
 	  
 	  @UiHandler("closeButton")

@@ -2,27 +2,39 @@
   xmlns:g='urn:import:com.google.gwt.user.client.ui'
   xmlns:d="urn:import:com.google.gwt.user.datepicker.client">
 
-  <ui:image field='logo' src='logo.png'/>
-
-  <ui:style>
-  .logo {
-    gwt-image: 'logo';
-    float: left;
-    padding-right: 1em;
-  }
-  </ui:style>
-
 <g:VerticalPanel>
-	<g:cell><g:HTMLPanel>Title:<g:TextBox></g:TextBox></g:HTMLPanel></g:cell>
-	<g:cell><g:HTMLPanel>Project:<g:ListBox></g:ListBox><g:Button>+</g:Button></g:HTMLPanel></g:cell>
-	<g:cell><g:HTMLPanel>Context:<g:ListBox></g:ListBox><g:Button>+</g:Button></g:HTMLPanel></g:cell>
-	<g:cell><g:HTMLPanel>Detail:<g:TextArea></g:TextArea></g:HTMLPanel></g:cell>
-	<g:cell><g:HTMLPanel>Due Time:<d:DatePicker></d:DatePicker></g:HTMLPanel></g:cell>
-	<g:cell><g:HorizontalPanel>
+<g:cell>
+<g:HTMLPanel>
+	<table>
+		<tr>
+			<td>Title:</td>
+			<td><g:TextBox ui:field="titleTextBox"></g:TextBox></td>
+		</tr>
+		<tr>
+			<td>Project:</td>
+			<td><g:ListBox></g:ListBox><g:Button ui:field="addProjectButton">+</g:Button></td>
+		</tr>
+		<tr>
+			<td>Context:</td>
+			<td><g:ListBox></g:ListBox><g:Button ui:field="addContextButton">+</g:Button></td>
+		</tr>
+		<tr>
+			<td>Detail:</td>
+			<td><g:TextArea></g:TextArea></td>
+		</tr>
+		<tr>
+			<td>Due Time:</td>
+			<td><d:DatePicker></d:DatePicker></td>
+		</tr>
+	</table>
+</g:HTMLPanel>
+</g:cell>
+<g:cell>
+	<g:HorizontalPanel>
 		<g:cell> <g:Button text='Save and New' ui:field='saveAndNewButton' /></g:cell>
 		<g:cell> <g:Button text='Save' ui:field='saveButton' /></g:cell>
 		<g:cell> <g:Button text='Close' ui:field='closeButton' /></g:cell>
 	</g:HorizontalPanel>
-	</g:cell>
+</g:cell>
 </g:VerticalPanel>
 </ui:UiBinder>

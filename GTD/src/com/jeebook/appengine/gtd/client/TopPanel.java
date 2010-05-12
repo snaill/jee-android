@@ -26,10 +26,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
-import com.jeebook.appengine.gtd.client.model.LoginInfo;
 import com.jeebook.appengine.gtd.client.service.AjaxRequest;
-import com.jeebook.appengine.gtd.client.service.LoginServiceAsync;
 
 /**
  * The top panel, which contains the 'welcome' message and various links.
@@ -46,8 +43,7 @@ public class TopPanel extends Composite {
   @UiField Anchor newActionLink;
   @UiField Anchor reportLink;
   
-  @Inject
-  public TopPanel(LoginServiceAsync loginService, final LoginInfo loginInfo) {
+  public TopPanel() {
     initWidget(uiBinder.createAndBindUi(this));
     
     new AjaxRequest(RequestBuilder.GET, "login") {
@@ -64,6 +60,8 @@ public class TopPanel extends Composite {
 
   @UiHandler("newActionLink")
 	void onNewActionClick(ClickEvent e) {
-			new NewActionDialog().show();
+	  NewActionDialog dlg = new NewActionDialog();
+	  dlg.show();
+	  dlg.center();
 	}
 }
