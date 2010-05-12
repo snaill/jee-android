@@ -20,7 +20,7 @@ public class NewProjectDialog extends DialogBox {
 
 	public NewProjectDialog() {
 	    // Use this opportunity to set the dialog's caption.
-	    setText("About the Mail Sample");
+	    setText("Project");
 	    setWidget(uiBinder.createAndBindUi(this));
 
 	    setAnimationEnabled(true);
