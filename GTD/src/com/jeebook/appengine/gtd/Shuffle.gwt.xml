@@ -12,12 +12,6 @@
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
-  <!-- Other module inherits                                      -->
-  <inherits name="com.google.gwt.inject.Inject"/>
-  
-  <!-- Include GWTUpload library -->
-  <inherits name="gwtupload.GWTUpload"/>
-  
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.jeebook.appengine.gtd.client.Shuffle'/>
 
