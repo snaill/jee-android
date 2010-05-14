@@ -35,7 +35,9 @@ public class ContextServlet extends BaseServlet {
 	protected String Get(User user) {
 		PersistenceManager pm = JdoUtils.getPm();
 		Query query = pm.newQuery(Context.class);
-		List<Context> contexts = (List<Context>)query.execute();
+		query.setFilter("mUser == user");
+	    query.declareParameters(user.getClass().getName() + " user");
+		List<Context> contexts = (List<Context>)query.execute(user);
 		List<ContextValue> values = Context.toValue(contexts);
 		return ContextValue.toJson(values);
 	}
