@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -14,6 +13,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.jeebook.appengine.gtd.client.model.ContextData;
 import com.jeebook.appengine.gtd.client.service.AjaxRequest;
 
 public class NewContextDialog extends DialogBox {
@@ -72,8 +72,8 @@ public class NewContextDialog extends DialogBox {
 	  }
 	  
 		void New() {
-			JSONObject cd = new JSONObject();
-			cd.put("name", new JSONString(nameTextBox.getText()));			
-		    new AjaxRequest(RequestBuilder.POST, "context/").send(cd.toString());
+			ContextData cd = (ContextData)ContextData.createObject();
+			cd.setName(nameTextBox.getText());
+		    new AjaxRequest(RequestBuilder.POST, "context/").send(new JSONObject(cd).toString());
 		}
 }

@@ -1,21 +1,24 @@
 package com.jeebook.appengine.gtd.client;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.datepicker.client.DatePicker;
+import com.jeebook.appengine.gtd.client.model.ActionData;
 import com.jeebook.appengine.gtd.client.model.ContextData;
 import com.jeebook.appengine.gtd.client.model.ProjectData;
 import com.jeebook.appengine.gtd.client.service.AjaxRequest;
@@ -28,9 +31,10 @@ public class NewActionDialog extends DialogBox {
 	interface NewActionDialogUiBinder extends UiBinder<Widget, NewActionDialog> {}
 	
 	@UiField TextBox nameTextBox;
-	@UiField TextBox detailsTextBox;
+	@UiField TextArea detailsTextArea;
 	@UiField ListBox projectListBox;
 	@UiField ListBox contextListBox;
+	@UiField DatePicker dueTimeDatePicker;
 	
 	public NewActionDialog() {
 	    // Use this opportunity to set the dialog's caption.
@@ -40,67 +44,54 @@ public class NewActionDialog extends DialogBox {
 	    setAnimationEnabled(true);
 	    setGlassEnabled(true);
 	    
-	    FillProjectListBox();
-	    FillContextListBox();
+	    updateProjectListBox();
+	    updateContextListBox();
 	    nameTextBox.setFocus(true);
 	}
 
-	void FillProjectListBox() {
+	void updateProjectListBox() {
+		projectListBox.clear();
+		
 		new AjaxRequest(RequestBuilder.GET, "project/") {
 			
 			@Override
 			public void onSuccess(String response){
-				JsArray<ProjectData> ja = asArrayOfProjectData(response);
-				for ( int i = 0; i < ja.length(); i ++ ) {
-					ProjectData pd = ja.get(i); 
+				JSONArray ja = (JSONArray)JSONParser.parse(response);
+				for ( int i = 0; i < ja.size(); i ++ ) {
+					ProjectData pd = (ProjectData)ja.get(i).isObject().getJavaScriptObject(); 
 					projectListBox.addItem(pd.getName(), pd.getId().toString());
 				}
 			}
 		}.send(null);	
 	}
 
-	void FillContextListBox() {
+	void updateContextListBox() {
+		contextListBox.clear();
+		
 		new AjaxRequest(RequestBuilder.GET, "context/") {
 			
 			@Override
 			public void onSuccess(String response){
-				JsArray<ContextData> ja = asArrayOfContextData(response);
-				for ( int i = 0; i < ja.length(); i ++ ) {
-					ContextData pd = ja.get(i); 
+				JSONArray ja = (JSONArray)JSONParser.parse(response);
+				for ( int i = 0; i < ja.size(); i ++ ) {
+					ContextData pd = (ContextData)ja.get(i).isObject().getJavaScriptObject(); 
 					contextListBox.addItem(pd.getName(), pd.getId().toString());
 				}
 			}
 		}.send(null);	
 	}
 
-	void saveAction() {
-		JSONObject	jo = new JSONObject();
-		jo.put("name", new JSONString(nameTextBox.getText()));
-		jo.put("details", new JSONString(detailsTextBox.getText()));
-		jo.put("projectId", new JSONString(nameTextBox.getText()));
-		jo.put("contextId", new JSONString(nameTextBox.getText()));
-//		jo.put("dueDate", new JSONDate)
+	void New() {
+		ActionData ad = (ActionData)ActionData.createObject();
+		ad.setName(nameTextBox.getText());
+		ad.setDetails(detailsTextArea.getText());
+		ad.setProjectId(projectListBox.getValue(projectListBox.getSelectedIndex()));
+		ad.setContextId(contextListBox.getValue(contextListBox.getSelectedIndex()));
+		ad.setDueDate(dueTimeDatePicker.getValue().toString());
 		
-		new AjaxRequest(RequestBuilder.POST, "action/") {
-			
-			@Override
-			public void onSuccess(String response){
-				JsArray<ContextData> ja = asArrayOfContextData(response);
-				for ( int i = 0; i < ja.length(); i ++ ) {
-					ContextData pd = ja.get(i); 
-					contextListBox.addItem(pd.getName(), pd.getId().toString());
-				}
-			}
-		}.send(null);	
+		new AjaxRequest(RequestBuilder.POST, "action/").send(new JSONObject(ad).toString());	
 	}
 	
-	  private final native JsArray<ProjectData> asArrayOfProjectData(String json) /*-{
-	    return eval(json);
-	  }-*/;
-	  private final native JsArray<ContextData> asArrayOfContextData(String json) /*-{
-	    return eval(json);
-	  }-*/;
-	  
 	  @Override
 	  protected void onPreviewNativeEvent(NativePreviewEvent preview) {
 	    super.onPreviewNativeEvent(preview);
@@ -120,13 +111,14 @@ public class NewActionDialog extends DialogBox {
 	  
 	  @UiHandler("saveAndNewButton")
 	  void onSaveAndNewClicked(ClickEvent event) {
-		  
-	    
+		New();  
 	  }
 	  
 	  @UiHandler("saveButton")
 	  void onSaveClicked(ClickEvent event) {
-	    hide();
+		New();  
+	    
+		  hide();
 	  }
 	  
 	  @UiHandler("closeButton")
@@ -139,6 +131,8 @@ public class NewActionDialog extends DialogBox {
 	    NewProjectDialog dlg = new NewProjectDialog();
 	    dlg.show();
 	    dlg.center();
+	    
+	    updateProjectListBox();
 	  }
 
 	  @UiHandler("addContextButton")
@@ -146,5 +140,7 @@ public class NewActionDialog extends DialogBox {
 	    NewContextDialog dlg = new NewContextDialog();
 	    dlg.show();
 	    dlg.center();
+	    
+	    updateContextListBox();
 	  }
 }

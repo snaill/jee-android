@@ -7,13 +7,13 @@ import org.json.JSONObject;
 
 public class ProjectValue {
 
-	private Long mId;
+	private String mId;
     
     private String mName;
     
-    private Long mDefaultContextId;
+    private String mDefaultContextId;
     
-    public final long getId() {
+    public final String getId() {
         return mId;
     }
 
@@ -21,11 +21,11 @@ public class ProjectValue {
         return mName;
     }
 
-    public final Long getDefaultContextId() {
+    public final String getDefaultContextId() {
         return mDefaultContextId;
     }  
     
-    public final void setId( long id ) {
+    public final void setId( String id ) {
         mId = id;
     }
 
@@ -33,7 +33,7 @@ public class ProjectValue {
         mName = name;
     }
 
-    public final void setDefaultContextId( long id ) {
+    public final void setDefaultContextId( String id ) {
         mDefaultContextId = id;
     }   
     
@@ -43,11 +43,11 @@ public class ProjectValue {
 		try {
 			jo = new JSONObject(json);
 			if ( jo.has("id") )
-				value.setId( jo.getInt("id") );
+				value.setId( jo.getString("id") );
 			if ( jo.has("name") )
 				value.setName( jo.getString("name") );	
 			if ( jo.has("defaultContextId") )
-				value.setDefaultContextId( jo.getInt("defaultContextId") );	
+				value.setDefaultContextId( jo.getString("defaultContextId") );	
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

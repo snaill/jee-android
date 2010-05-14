@@ -20,7 +20,7 @@
 		</tr>
 		<tr>
 			<td>Detail:</td>
-			<td><g:TextArea ui:field="detailTextArea"></g:TextArea></td>
+			<td><g:TextArea ui:field="detailsTextArea"></g:TextArea></td>
 		</tr>
 		<tr>
 			<td>Due Time:</td>

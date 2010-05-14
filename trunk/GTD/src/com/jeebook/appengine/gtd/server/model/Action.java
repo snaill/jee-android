@@ -1,9 +1,7 @@
 package com.jeebook.appengine.gtd.server.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -34,12 +32,12 @@ public class Action {
     private Long mContextId;
     
     @Persistent
-    private Date mDueDate;
+    private String mDueDate;
 
     @Persistent
-    private Date mFinishDate;
+    private String mFinishDate;
     
-    public final long getId() {
+    public final Long getId() {
         return mId;
     }
 
@@ -63,11 +61,11 @@ public class Action {
 		return mContextId;
 	}
 
-	public final Date getDueDate() {
+	public final String getDueDate() {
 		return mDueDate;
 	}
 
-	public final Date getFinishDate() {
+	public final String getFinishDate() {
 		return mFinishDate;
 	}
 
@@ -87,30 +85,30 @@ public class Action {
 		mDetails = details;
 	}
 
-	public final void setProjectId( long id ) {
+	public final void setProjectId( Long id ) {
 		mProjectId = id;
 	}
 
-	public final void setContextId( long id ) {
+	public final void setContextId( Long id ) {
 		mContextId = id;
 	}
 
-	public final void setDueDate( Date date ) {
+	public final void setDueDate( String date ) {
 		mDueDate = date;
 	}
 
-	public final void setFinishDate( Date date ) {
+	public final void setFinishDate( String date ) {
 		mFinishDate = date;
 	}
 	
 	public static Action fromValue( User user, ActionValue value ) {
 		Action action = new Action();
-		action.setId(value.getId());
+		action.setId(Long.parseLong(value.getId()));
 		action.setName(value.getName());
 		action.setUser(user);
 		action.setDetails(value.getDetails());
-		action.setProjectId(value.getProjectId());
-		action.setContextId(value.getContextId());
+		action.setProjectId(Long.parseLong(value.getProjectId()));
+		action.setContextId(Long.parseLong(value.getContextId()));
 		action.setDueDate(value.getDueDate());
 		action.setFinishDate(value.getFinishDate());
 		return action;
@@ -126,11 +124,11 @@ public class Action {
 	
 	public ActionValue toValue() {
 		ActionValue value = new ActionValue();
-		value.setId(getId());
+		value.setId(getId().toString());
 		value.setName(getName());
 		value.setDetails(getDetails());
-		value.setProjectId(getProjectId());
-		value.setContextId(getContextId());
+		value.setProjectId(getProjectId().toString());
+		value.setContextId(getContextId().toString());
 		value.setDueDate(getDueDate());
 		value.setFinishDate(getFinishDate());
 		return value;

@@ -15,12 +15,12 @@
 <g:VerticalPanel>
 	<g:cell>
 		<g:HTMLPanel>
-			Name:<g:TextBox></g:TextBox>
+			Name:<g:TextBox ui:field="nameTextBox"></g:TextBox>
 		</g:HTMLPanel>
 	</g:cell>
 	<g:cell>
 		<g:HTMLPanel>
-			Default Context:<g:ListBox></g:ListBox>
+			Default Context:<g:ListBox ui:field="defaultContextListBox"></g:ListBox>
 			<g:Button>+</g:Button>
 		</g:HTMLPanel>
 	</g:cell>
