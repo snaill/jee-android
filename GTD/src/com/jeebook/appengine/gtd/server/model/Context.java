@@ -36,7 +36,7 @@ public class Context implements Serializable {
 		return mName;
 	}
 	
-	public final void setId( long id ) {
+	public final void setId( Long id ) {
 		mId = id;
 	}
 
@@ -50,7 +50,7 @@ public class Context implements Serializable {
 	
 	public static Context fromValue( User user, ContextValue value ) {
 		Context context = new Context();
-		Long id = ( null == value.getId() ) ? 0 : Long.parseLong(value.getId()); 
+		Long id = ( null == value.getId() ) ? null : Long.parseLong(value.getId()); 
 		context.setId(id);
 		context.setName(value.getName());
 		context.setUser(user);
