@@ -1,27 +1,26 @@
 package com.jeebook.appengine.gtd.server.model;
 
-import java.util.Date;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ActionValue {
-    private Long mId;
+    private String mId;
    
     private String mName;
 
     private String mDetails;
 
-    private Long mProjectId;
+    private String mProjectId;
     
-    private Long mContextId;
+    private String mContextId;
     
-    private Date mDueDate;
+    private String mDueDate;
 
-    private Date mFinishDate;
+    private String mFinishDate;
     
-    public final long getId() {
+    public final String getId() {
         return mId;
     }
     
@@ -33,23 +32,23 @@ public class ActionValue {
 		return mDetails;
 	}
 
-	public final Long getProjectId() {
+	public final String getProjectId() {
 		return mProjectId;
 	}
 
-	public final Long getContextId() {
+	public final String getContextId() {
 		return mContextId;
 	}
 
-	public final Date getDueDate() {
+	public final String getDueDate() {
 		return mDueDate;
 	}
 
-	public final Date getFinishDate() {
+	public final String getFinishDate() {
 		return mFinishDate;
 	}
 
-    public final void setId( long id ) {
+    public final void setId( String id ) {
         mId = id;
     }
     
@@ -61,19 +60,19 @@ public class ActionValue {
 		mDetails = details;
 	}
 
-	public final void setProjectId( long id ) {
+	public final void setProjectId( String id ) {
 		mProjectId = id;
 	}
 
-	public final void setContextId( long id ) {
+	public final void setContextId( String id ) {
 		mContextId = id;
 	}
 
-	public final void setDueDate( Date date ) {
+	public final void setDueDate( String date ) {
 		mDueDate = date;
 	}
 
-	public final void setFinishDate( Date date ) {
+	public final void setFinishDate( String date ) {
 		mFinishDate = date;
 	}	
 	
@@ -83,19 +82,19 @@ public class ActionValue {
 		try {
 			jo = new JSONObject(json);
 			if ( jo.has("id") )
-				value.setId( jo.getInt("id") );
+				value.setId( jo.getString("id") );
 			if ( jo.has("name") )
 				value.setName( jo.getString("name") );	
 			if ( jo.has("details") )
 				value.setDetails( jo.getString("details") );	
 			if ( jo.has("projectId") )
-				value.setProjectId( jo.getInt("projectId") );
+				value.setProjectId( jo.getString("projectId") );
 			if ( jo.has("contextId") )
-				value.setContextId( jo.getInt("contextId") );
+				value.setContextId( jo.getString("contextId") );
 			if ( jo.has("dueDate") )
-				value.setDueDate( new Date(jo.getInt("dueDate")) );
+				value.setDueDate( jo.getString("dueDate") );
 			if ( jo.has("finishDate") )
-				value.setFinishDate( new Date(jo.getInt("finishDate")) );
+				value.setFinishDate( jo.getString("finishDate") );
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,8 +116,8 @@ public class ActionValue {
 			jo.put("details", getDetails());
 			jo.put("projectId", getProjectId());
 			jo.put("contextId", getContextId());
-			jo.put("dueDate", getDueDate().getTime());
-			jo.put("finishDate", getFinishDate().getTime());
+			jo.put("dueDate", getDueDate());
+			jo.put("finishDate", getFinishDate());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

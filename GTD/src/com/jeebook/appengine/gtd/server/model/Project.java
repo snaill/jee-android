@@ -28,7 +28,7 @@ public class Project implements Serializable {
     @Persistent
     private Long mDefaultContextId;
     
-    public final long getId() {
+    public final Long getId() {
         return mId;
     }
     
@@ -44,7 +44,7 @@ public class Project implements Serializable {
         return mDefaultContextId;
     }  
     
-    public final void setId( long id ) {
+    public final void setId( Long id ) {
         mId = id;
     }
     
@@ -56,16 +56,16 @@ public class Project implements Serializable {
         mName = name;
     }
 
-    public final void setDefaultContextId( long id ) {
+    public final void setDefaultContextId( Long id ) {
         mDefaultContextId = id;
     } 
     
 	public static Project fromValue( User user, ProjectValue value ) {
 		Project project = new Project();
-		project.setId(value.getId());
+		project.setId(Long.parseLong(value.getId()));
 		project.setName(value.getName());
 		project.setUser(user);
-		project.setDefaultContextId(value.getDefaultContextId());
+		project.setDefaultContextId(Long.parseLong(value.getDefaultContextId()));
 		return project;
 	}
 	
@@ -79,9 +79,9 @@ public class Project implements Serializable {
 	
 	public ProjectValue toValue() {
 		ProjectValue value = new ProjectValue();
-		value.setId(getId());
+		value.setId(getId().toString());
 		value.setName(getName());
-		value.setDefaultContextId(getDefaultContextId());
+		value.setDefaultContextId(getDefaultContextId().toString());
 		return value;
 	}
 }

@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 public class ContextValue {
 
-	private Long mId;
+	private String mId;
     
 	private String mName;
 	
-	public final long getId() {
+	public final String getId() {
 		return mId;
 	}
 
@@ -20,7 +20,7 @@ public class ContextValue {
 		return mName;
 	}
 	
-	public final void setId( long id ) {
+	public final void setId( String id ) {
 		mId = id;
 	}
 	
@@ -34,7 +34,7 @@ public class ContextValue {
 		try {
 			jo = new JSONObject(json);
 			if ( jo.has("id") )
-				value.setId( jo.getInt("id") );
+				value.setId( jo.getString("id") );
 			if ( jo.has("name") )
 				value.setName( jo.getString("name") );	
 		} catch (JSONException e) {

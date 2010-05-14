@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gwt.core.client.GWT;
 
 @SuppressWarnings("serial")
 public class BaseServlet extends HttpServlet {
