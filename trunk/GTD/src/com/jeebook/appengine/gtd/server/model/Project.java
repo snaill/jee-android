@@ -62,10 +62,12 @@ public class Project implements Serializable {
     
 	public static Project fromValue( User user, ProjectValue value ) {
 		Project project = new Project();
-		project.setId(Long.parseLong(value.getId()));
+		if ( null != value.getId() )
+			project.setId(Long.parseLong(value.getId()));
 		project.setName(value.getName());
 		project.setUser(user);
-		project.setDefaultContextId(Long.parseLong(value.getDefaultContextId()));
+		if ( null != value.getDefaultContextId() )
+			project.setDefaultContextId(Long.parseLong(value.getDefaultContextId()));
 		return project;
 	}
 	

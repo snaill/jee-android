@@ -69,7 +69,7 @@ public class Action {
 		return mFinishDate;
 	}
 
-    public final void setId( long id ) {
+    public final void setId( Long id ) {
         mId = id;
     }
 
@@ -103,12 +103,15 @@ public class Action {
 	
 	public static Action fromValue( User user, ActionValue value ) {
 		Action action = new Action();
-		action.setId(Long.parseLong(value.getId()));
+		if ( null != value.getId() )
+			action.setId(Long.parseLong(value.getId()));
 		action.setName(value.getName());
 		action.setUser(user);
 		action.setDetails(value.getDetails());
-		action.setProjectId(Long.parseLong(value.getProjectId()));
-		action.setContextId(Long.parseLong(value.getContextId()));
+		if ( null != value.getProjectId() )
+			action.setProjectId(Long.parseLong(value.getProjectId()));
+		if ( null != value.getContextId() )
+			action.setContextId(Long.parseLong(value.getContextId()));
 		action.setDueDate(value.getDueDate());
 		action.setFinishDate(value.getFinishDate());
 		return action;

@@ -35,7 +35,9 @@ public class ActionServlet extends BaseServlet {
 	protected String Get(User user) {
 		PersistenceManager pm = JdoUtils.getPm();
 		Query query = pm.newQuery(Action.class);
-		List<Action> actions = (List<Action>)query.execute();
+		query.setFilter("mUser == user");
+	    query.declareParameters(user.getClass().getName() + " user");
+		List<Action> actions = (List<Action>)query.execute(user);
 		List<ActionValue> values = Action.toValue(actions);
 		return ActionValue.toJson(values);
 	}

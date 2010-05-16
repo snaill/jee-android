@@ -1,5 +1,6 @@
 package com.jeebook.appengine.gtd.client;
 
+import java.util.Date;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,8 +19,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.datepicker.client.DatePicker;
+import com.jeebook.appengine.gtd.client.command.UpdateContextListBoxCommand;
 import com.jeebook.appengine.gtd.client.model.ActionData;
-import com.jeebook.appengine.gtd.client.model.ContextData;
 import com.jeebook.appengine.gtd.client.model.ProjectData;
 import com.jeebook.appengine.gtd.client.service.AjaxRequest;
 
@@ -45,7 +46,9 @@ public class NewActionDialog extends DialogBox {
 	    setGlassEnabled(true);
 	    
 	    updateProjectListBox();
-	    updateContextListBox();
+	    
+	    UpdateContextListBoxCommand cmd = new UpdateContextListBoxCommand(contextListBox);
+	    cmd.execute();
 	    nameTextBox.setFocus(true);
 	}
 
@@ -65,29 +68,15 @@ public class NewActionDialog extends DialogBox {
 		}.send(null);	
 	}
 
-	void updateContextListBox() {
-		contextListBox.clear();
-		
-		new AjaxRequest(RequestBuilder.GET, "context/") {
-			
-			@Override
-			public void onSuccess(String response){
-				JSONArray ja = (JSONArray)JSONParser.parse(response);
-				for ( int i = 0; i < ja.size(); i ++ ) {
-					ContextData pd = (ContextData)ja.get(i).isObject().getJavaScriptObject(); 
-					contextListBox.addItem(pd.getName(), pd.getId().toString());
-				}
-			}
-		}.send(null);	
-	}
-
 	void New() {
 		ActionData ad = (ActionData)ActionData.createObject();
 		ad.setName(nameTextBox.getText());
 		ad.setDetails(detailsTextArea.getText());
 		ad.setProjectId(projectListBox.getValue(projectListBox.getSelectedIndex()));
 		ad.setContextId(contextListBox.getValue(contextListBox.getSelectedIndex()));
-		ad.setDueDate(dueTimeDatePicker.getValue().toString());
+		Date dueTime = dueTimeDatePicker.getValue();
+		if ( null != dueTime )
+			ad.setDueDate(dueTime.toString());
 		
 		new AjaxRequest(RequestBuilder.POST, "action/").send(new JSONObject(ad).toString());	
 	}
@@ -141,6 +130,7 @@ public class NewActionDialog extends DialogBox {
 	    dlg.show();
 	    dlg.center();
 	    
-	    updateContextListBox();
+	    UpdateContextListBoxCommand cmd = new UpdateContextListBoxCommand(contextListBox);
+	    cmd.execute();
 	  }
 }
