@@ -8,7 +8,9 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
+import com.jeebook.appengine.gtd.client.model.ActionData;
 
 public class ActionWidget extends Composite {
 
@@ -18,16 +20,15 @@ public class ActionWidget extends Composite {
 	interface ActionWidgetUiBinder extends UiBinder<Widget, ActionWidget> {
 	}
 
-	@UiField
-	Button button;
+	@UiField HTML nameHtml;
 
-	public ActionWidget(String firstName) {
-		initWidget(uiBinder.createAndBindUi(this));
-		button.setText(firstName);
+	public ActionWidget(ActionData ad) {
+		initWidget(uiBinder.createAndBindUi(this));	
+		nameHtml.setHTML(ad.getName());
 	}
 
-	@UiHandler("button")
-	void onClick(ClickEvent e) {
+	@UiHandler("finishButton")
+	void onFinishClick(ClickEvent e) {
 		Window.alert("Hello!");
 	}
 

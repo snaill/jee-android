@@ -1,13 +1,25 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style>
-		.important {
-			font-weight: bold;
-		}
-	</ui:style>
-	<g:HTMLPanel>
-		Hello,
-		<g:Button styleName="{style.important}" ui:field="button" />
-	</g:HTMLPanel>
+	<g:VerticalPanel>
+		<g:cell>
+			<g:HorizontalPanel>
+				<g:cell><g:HTML ui:field="nameHtml" /></g:cell>
+				<g:cell><g:HTML ui:field="projectHtml" /></g:cell>
+				<g:cell><g:HTML ui:field="dueTimeHtml" /></g:cell>
+			</g:HorizontalPanel>
+		</g:cell>
+		<g:cell>
+			<g:HTML ui:field="detailsHtml" />
+		</g:cell>
+		<g:cell>
+			<g:HorizontalPanel>
+				<g:HTML ui:field="contextHtml" />
+				<g:cell><g:Button ui:field="finishButton">Finish</g:Button></g:cell>
+				<g:cell><g:Button>Waiting</g:Button></g:cell>
+				<g:cell><g:Button>Someday</g:Button></g:cell>
+				<g:cell><g:Button>Modify</g:Button></g:cell>
+			</g:HorizontalPanel>
+		</g:cell>
+	</g:VerticalPanel>
 </ui:UiBinder> 

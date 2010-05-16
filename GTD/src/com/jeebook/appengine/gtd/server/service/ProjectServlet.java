@@ -35,7 +35,9 @@ public class ProjectServlet extends BaseServlet {
 	protected String Get(User user) {
 		PersistenceManager pm = JdoUtils.getPm();
 		Query query = pm.newQuery(Project.class);
-		List<Project> projects = (List<Project>)query.execute();
+		query.setFilter("mUser == user");
+	    query.declareParameters(user.getClass().getName() + " user");
+		List<Project> projects = (List<Project>)query.execute(user);
 		List<ProjectValue> values = Project.toValue(projects);
 		return ProjectValue.toJson(values);
 	}

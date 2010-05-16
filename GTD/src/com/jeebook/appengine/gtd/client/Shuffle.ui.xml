@@ -8,10 +8,10 @@
 		</g:north>
 
 		<g:center>
-			<g:TabLayoutPanel barHeight="30">
+			<g:TabLayoutPanel ui:field="shuffleTabPanel" barHeight="30">
 				<g:tab>
 					<g:header size='7'>Inbox</g:header>
-					<shuffle:InboxPanel ui:field='inbox' />
+					<g:FlexTable ui:field='inboxTable' cellSpacing='0' cellPadding='0'/>
 				</g:tab>
 				<g:tab>
 					<g:header size='7'>Next Action</g:header>

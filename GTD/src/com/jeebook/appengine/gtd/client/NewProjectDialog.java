@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.jeebook.appengine.gtd.client.command.UpdateContextListBoxCommand;
 import com.jeebook.appengine.gtd.client.model.ProjectData;
 import com.jeebook.appengine.gtd.client.service.AjaxRequest;
 
@@ -36,6 +37,9 @@ public class NewProjectDialog extends DialogBox {
 
 	    setAnimationEnabled(true);
 	    setGlassEnabled(true);
+	    
+	    UpdateContextListBoxCommand cmd = new UpdateContextListBoxCommand(defaultContextListBox);
+	    cmd.execute();
 	}
 
 	  @Override
@@ -70,11 +74,11 @@ public class NewProjectDialog extends DialogBox {
 	    hide();
 	  }
 
-		void New() {
-			ProjectData pd = (ProjectData)ProjectData.createObject();
-			pd.setName(nameTextBox.getText());
-			String defaultContextId = defaultContextListBox.getValue(defaultContextListBox.getSelectedIndex());
-			pd.setDefaultContextId(defaultContextId);
-		    new AjaxRequest(RequestBuilder.POST, "project/").send(new JSONObject(pd).toString());
-		}
+	void New() {
+		ProjectData pd = (ProjectData)ProjectData.createObject();
+		pd.setName(nameTextBox.getText());
+		String defaultContextId = defaultContextListBox.getValue(defaultContextListBox.getSelectedIndex());
+		pd.setDefaultContextId(defaultContextId);
+	    new AjaxRequest(RequestBuilder.POST, "project/").send(new JSONObject(pd).toString());
+	}
 }
